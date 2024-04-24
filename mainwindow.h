@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "database.h"
 #include <QDateEdit>
 #include <QMainWindow>
 #include <QCalendarWidget>
@@ -41,6 +42,7 @@ private:
     //create a list view model
     QStandardItemModel *model;
     QStandardItem *item;
+    database db;
 
 };
 #endif // MAINWINDOW_H
