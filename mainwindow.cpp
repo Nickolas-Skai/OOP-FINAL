@@ -92,11 +92,10 @@ void MainWindow::on_signup_clicked()
     if (!dobDate.isValid()) {
         // Handle incase date of birth is not valid
         qDebug() << "Date of birth is not valid";
-    } else {
-        // Convert QDate object back to a formatted QString the database will be able to take
-        QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
     }
 
+    // Convert QDate object back to a formatted QString the database will be able to take
+    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
     //the admin privelage is not showed and so the user will be given a admin = false always, and can only changed by admin
     bool admin = false;
 
