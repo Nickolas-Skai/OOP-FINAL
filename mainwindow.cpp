@@ -97,10 +97,6 @@ void MainWindow::on_signup_clicked()
         QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
     }
 
-
-    // Convert QDate object back to formatted QString
-    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
-
     //the admin privelage is not showed and so the user will be given a admin = false always, and can only changed by admin
     bool admin = false;
 
