@@ -2,12 +2,13 @@
 
 database::database()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    //connect to the database
+    db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
-    db.setUserName("root");
-    db.setPassword("w8080#$#$ons@");
+    db.setPort(3306);
     db.setDatabaseName("ResortBooking");
-    db.open();
+    db.setUserName("root");
+    db.setPassword("fatguy_123");
 
     try
     {
@@ -83,3 +84,4 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
     // the User added successfully
     return true;
 }
+

@@ -12,7 +12,8 @@
 #include <QMessageBox>
 
 
-//adding comment
+//adding comment/
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)

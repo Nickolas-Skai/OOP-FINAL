@@ -13,6 +13,11 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">MainWindow
+{
+color: blue;}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
@@ -24,7 +29,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -215,6 +220,20 @@
         <width>1141</width>
         <height>661</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QMainWindow {
+            background-color: lightgreen;
+        }
+QPushButton {
+            background-color: lightblue;
+        }
+ QPushButton:hover {
+            background-color: blue;
+            color: white;
+        }
+
+</string>
       </property>
       <property name="text">
        <string/>
@@ -913,11 +932,23 @@
      <x>0</x>
      <y>0</y>
      <width>1140</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSign_out">
+    <property name="title">
+     <string>Sign out </string>
+    </property>
+    <addaction name="actionSign_out_Exit"/>
+   </widget>
+   <addaction name="menuSign_out"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSign_out_Exit">
+   <property name="text">
+    <string>Sign out &amp; Exit </string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
