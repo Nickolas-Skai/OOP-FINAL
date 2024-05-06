@@ -85,3 +85,4 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
     return true;
 }
 
+

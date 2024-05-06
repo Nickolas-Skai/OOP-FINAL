@@ -14,9 +14,22 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">MainWindow
-{
-color: blue;}</string>
+   <string notr="true">/* Set background gradient for main window */
+QMainWindow {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #FFFFFF, stop:1 #00FF00);
+}
+
+/* Set font and color for all QLabel */
+QLabel {
+    color: black;
+   font-family: &quot;Sitka Heading Semibold&quot;, sans-serif;
+   font-size: 16px; /* Adjust font size as needed */
+}
+QCheckBox {
+color: black;
+font-family:&quot; Sitka Heading SemiBold&quot;, sans-serif;
+font size : 16px;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QStackedWidget" name="stackedWidget">
@@ -29,7 +42,7 @@ color: blue;}</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -46,14 +59,18 @@ color: blue;}</string>
         <widget class="QLabel" name="welcome_msg">
          <property name="font">
           <font>
-           <family>Jokerman</family>
-           <pointsize>36</pointsize>
+           <family>Sitka Heading Semibold</family>
+           <pointsize>-1</pointsize>
+           <bold>true</bold>
            <underline>true</underline>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0)
+</string>
+         </property>
          <property name="text">
-          <string>WELCOME
- TO SEOCHALEO RESORT</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;WELCOME&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt; TO SEOCHALEO RESORT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -64,8 +81,8 @@ color: blue;}</string>
         <widget class="QLabel" name="instrcutons">
          <property name="font">
           <font>
-           <family>Onyx</family>
-           <pointsize>20</pointsize>
+           <family>Sitka Heading Semibold</family>
+           <pointsize>-1</pointsize>
           </font>
          </property>
          <property name="text">
@@ -186,7 +203,11 @@ color: blue;}</string>
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QLineEdit" name="adressLineEdit"/>
+          <widget class="QLineEdit" name="adressLineEdit">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="emailLabel">
@@ -212,33 +233,6 @@ color: blue;}</string>
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="bgimg_signup">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1141</width>
-        <height>661</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QMainWindow {
-            background-color: lightgreen;
-        }
-QPushButton {
-            background-color: lightblue;
-        }
- QPushButton:hover {
-            background-color: blue;
-            color: white;
-        }
-
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QPushButton" name="signup">
       <property name="geometry">
        <rect>
@@ -247,6 +241,9 @@ QPushButton {
         <width>83</width>
         <height>29</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(33, 150, 66);</string>
       </property>
       <property name="text">
        <string>SIGN UP</string>
@@ -265,10 +262,6 @@ QPushButton {
        <string>Sign Up to get access to booking services</string>
       </property>
      </widget>
-     <zorder>bgimg_signup</zorder>
-     <zorder>horizontalLayoutWidget_2</zorder>
-     <zorder>signup</zorder>
-     <zorder>title_signup</zorder>
     </widget>
     <widget class="QWidget" name="Login">
      <widget class="QWidget" name="verticalLayoutWidget">
