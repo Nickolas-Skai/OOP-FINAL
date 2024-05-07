@@ -20,17 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QPixmap pix(":/.png/tropicalbg.png");
-    QPixmap pix1(":/.png/icon.png");
-    ui->bg_image->setPixmap(pix);
-    ui->bgimg_login->setPixmap(pix);
-    ui->bgimg_signup->setPixmap(pix);
-    ui->Search_icon->setPixmap(pix1);
-    ui->bg_image->setScaledContents(true);
-    ui->bgimg_login->setScaledContents(true);
-    ui->bgimg_signup->setScaledContents(true);
-    ui->Search_icon->setScaledContents(true);
-
     //create a instance of the standard item model
     model = new QStandardItemModel(this);
 
