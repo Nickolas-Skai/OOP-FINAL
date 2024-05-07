@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-//#include "database.h"
+#include "database.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
 #include <QPalette>

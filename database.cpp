@@ -8,7 +8,7 @@ database::database()
     db.setPort(3306);
     db.setDatabaseName("ResortBooking");
     db.setUserName("root");
-    db.setPassword("fatguy_123");
+    db.setPassword("w8080#$#$ons@");
 
     try
     {
