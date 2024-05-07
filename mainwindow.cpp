@@ -110,3 +110,90 @@ void MainWindow::on_signup_clicked()
     }
 }
 
+
+void MainWindow::on_Back2home_2_clicked()
+{
+    //this will retun the user to the home page
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_back2home_clicked()
+{
+    //this will return the user to the home page
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_Back_2List_clicked()
+{
+    //this will return the user to the listing page
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+
+void MainWindow::on_Backtoroom_clicked()
+{
+    //this will take a user back to the room page
+    ui->stackedWidget->setCurrentIndex(4);
+
+}
+
+
+void MainWindow::on_b2menu_clicked()
+{
+    //this will take a user back to the menu page
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+
+void MainWindow::on_b2menu_2_clicked()
+{
+    //this will take a user back to the menu page
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+
+void MainWindow::on_b2menu_3_clicked()
+{
+    //this will take a user back to the menu page
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+
+void MainWindow::on_b2menu_4_clicked()
+{
+    //this will take a user back to the menu page
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+
+void MainWindow::on_actionSign_out_Exit_triggered()
+{
+    //this will log you out and exit the program
+    //ask if sure?
+    //if yes is clicked then log out and exit
+    int ret = QMessageBox::question(this, "Sign out", "Are you sure you want to sign out and exit?", QMessageBox::Yes | QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        // Log out and exit
+        ui->stackedWidget->setCurrentIndex(0);
+        QApplication::quit();
+    }
+
+
+}
+
+
+void MainWindow::on_actionSign_out_triggered()
+{
+    //this will log out the user
+    //ask if sure?
+    //if yes is clicked then log out
+    int ret = QMessageBox::question(this, "Sign out", "Are you sure you want to sign out?", QMessageBox::Yes | QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        // Log out
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+
+}
+

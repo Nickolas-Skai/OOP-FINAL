@@ -37,6 +37,26 @@ private slots:
 
     void on_signup_clicked();
 
+    void on_Back2home_2_clicked();
+
+    void on_back2home_clicked();
+
+    void on_Back_2List_clicked();
+
+    void on_Backtoroom_clicked();
+
+    void on_b2menu_clicked();
+
+    void on_b2menu_2_clicked();
+
+    void on_b2menu_3_clicked();
+
+    void on_b2menu_4_clicked();
+
+    void on_actionSign_out_Exit_triggered();
+
+    void on_actionSign_out_triggered();
+
 private:
     Ui::MainWindow *ui;
     //create a list view model
