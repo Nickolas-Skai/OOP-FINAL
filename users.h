@@ -17,9 +17,10 @@ private:
     bool isAdmin;
 public:
     users();
-    users(QString fname, QString lname, QString username, QString pswd, QString Dob, QString phn_num, QString mail, bool admin);
+    users(int id, QString fname, QString lname, QString username, QString pswd, QString Dob, QString phn_num, QString mail, bool admin);
 
     //setters
+    void setUserID(int id);
     void setFirstname(QString firstname);
     void setLastname(QString lastname);
     void setUsername(QString username);
@@ -30,6 +31,7 @@ public:
     void setadmin(bool admin);
 
     //getters
+    int getUserID();
     QString getFirstname();
     QString getLastname();
     QString getUsername();
@@ -37,7 +39,7 @@ public:
     QString getDateOfBrith();
     QString getPhoneNumber();
     QString getEmail();
-    QString getAdmin();
+    bool getAdmin();
 
 };
 

@@ -42,23 +42,34 @@ database::~database() {
 }
 
 
-bool database::VerifyUser(QString userName, QString Passrd) {
+QStringList database::VerifyUser(QString userName, QString Passrd) {
+    QStringList UserData;
+
     QSqlQuery query;
-    query.prepare("SELECT COUNT(*) FROM User WHERE username = ? AND password = ?");
+    query.prepare("SELECT * FROM User WHERE username = ? AND password = ?");
     query.bindValue(0, userName);
     query.bindValue(1, Passrd);
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return false; // Database query failed
+        //return false; // Database query failed
     }
 
     if (query.next()) {
-        int count = query.value(0).toInt();
-        return count == 1; // Return true if there's exactly one matching user
+        //int count = query.value(0).toInt();
+        //return count == 1; // Return true if there's exactly one matching user
+        UserData << query.value("UserID").toString();
+        UserData << query.value("FirstName").toString();
+        UserData << query.value("LastName").toString();
+        UserData << query.value("UserName").toString();
+        UserData << query.value("Password").toString();
+        UserData << query.value("DateOfBirth").toString();
+        UserData << query.value("PhoneNum").toString();
+        UserData << query.value("Email").toString();
+        UserData << query.value("IsAdmin").toString();
     }
 
-    return false; // No rows returned
+    return UserData;//returns the users data
 }
 
 

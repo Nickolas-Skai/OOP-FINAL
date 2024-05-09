@@ -3,12 +3,25 @@
 users::users() {}
 
 
-users::users(QString fname, QString lname, QString username, QString pswd, QString Dob, QString phn_num, QString mail, bool admin) {
+users::users(int id, QString fname, QString lname, QString username, QString pswd, QString Dob, QString phn_num, QString mail, bool admin) {
     //don't know if to use sets to or datamembers
-
+    //we don't have any validation but we could use the setters
+    setUserID(id);
+    setFirstname(fname);
+    setLastname(lname);
+    setUsername(username);
+    setPassword(pswd);
+    setDOB(Dob);
+    setPhonenumber(phn_num);
+    setEmail(mail);
+    setadmin(admin);
 }
 
 //setter functions
+void users::setUserID(int id) {
+    UserId = id;
+}
+
 void users::setFirstname(QString firstname) {
     Firstname = firstname;
 }
@@ -43,6 +56,9 @@ void users::setadmin(bool admin) {
 
 
 //getter functions
+int users::getUserID() {
+    return UserId;
+}
 
 QString users::getFirstname() {
     return Firstname;
@@ -72,6 +88,6 @@ QString users::getEmail() {
     return Email;
 }
 
-QString users::getAdmin() {
+bool users::getAdmin() {
     return isAdmin;
 }

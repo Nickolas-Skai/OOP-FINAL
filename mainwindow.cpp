@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "database.h"
+#include "users.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
 #include <QPalette>
@@ -56,14 +57,46 @@ ui->stackedWidget->setCurrentIndex(1);
 void MainWindow::on_login_clicked()
 {
     //go to the listingPage if login credentials are correct
+
+    //get user input
 QString usrname = ui->user_input->text();
 QString passrd = ui->pass_input->text();
    // ui->stackedWidget->setCurrentIndex(3);
 
-if(db.VerifyUser(usrname, passrd)) {
-        ui->stackedWidget->setCurrentIndex(3);
-}else{
-        QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
+//to store the users credentials that are retrieved from the
+//the verify function
+QStringList usercredentials = db.VerifyUser(usrname, passrd);
+
+//if the user's credentials are empty then give an error
+if (usercredentials.isEmpty()) {
+    QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
+    return;
+}
+
+//and extract the information
+int userid = usercredentials.at(0).toInt();
+QString fname = usercredentials.at(1);
+QString lname = usercredentials.at(2);
+QString usernam = usercredentials.at(3);
+QString pswd = usercredentials.at(4);
+QString date_of_birht = usercredentials.at(5);
+QString phone_number = usercredentials.at(6);
+QString email = usercredentials.at(7);
+bool admin = usercredentials.at(8) == "true";
+
+//create an instance of the user through the constructor of user
+users userinstance(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
+
+
+//check if its admin by checking if its true at 8
+if(admin == true) {
+    //give the admin features such as edit and delete
+
+
+} else {
+    //give the regular users the booking features
+    // Proceed with the login process...
+    ui->stackedWidget->setCurrentIndex(5);
 }
 
 }
