@@ -41,6 +41,12 @@ public:
     QString getEmail();
     bool getAdmin();
 
+    //other member functions
+    //since basic users are the customers they can book, pick amenities and
+    QString BookRoom();
+    QString BookAmenities();
+    QString MakePayment();
+
 };
 
 #endif // USERS_H

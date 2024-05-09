@@ -20,6 +20,8 @@ public:
     QStringList VerifyUser(QString Username, QString password);
     //adding a user
     bool addUser(QString firstname, QString lastname, QString username, QString Password, QString phonenum, QString Email, QString dob, bool isadmin);
+    //edit user
+
 
 
 };
