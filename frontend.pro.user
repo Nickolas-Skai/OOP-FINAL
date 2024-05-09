@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 12.0.1, 2024-05-08T23:20:57. -->
+=======
+<!-- Written by QtCreator 12.0.1, 2024-05-06T21:50:30. -->
+>>>>>>> parent of f5e3a96 (SOME BUTTONS)
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
