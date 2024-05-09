@@ -10,21 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     adminusers.cpp \
-    amenities.cpp \
-    booking.cpp \
     database.cpp \
     main.cpp \
     mainwindow.cpp \
-    room.cpp \
     users.cpp
 
 HEADERS += \
     adminusers.h \
-    amenities.h \
-    booking.h \
     database.h \
     mainwindow.h \
-    room.h \
     users.h
 
 FORMS += \
