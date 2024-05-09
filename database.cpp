@@ -96,4 +96,59 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
     return true;
 }
 
+//this function will update the user informatin after it was changed by the admin in the ui
+bool database::editUser(QString firatname, QString lastname, QString, QString password, QString phoneum, QString email, QString dob, bool isadmin) {
+    QSqlQuery query;
+    query.prepare("UPDATE User SET");
+}
 
+//this function will add the room into the database
+bool database::addRoom(int roomnumber, QString Roomtype, int capacity, double pricepernight, bool availability) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO Room (Room_Number, Room_Type, Capacity, Price_Per_Night, Is_Available) "
+                   "VALUES (:roomnumber, :Roomtype, :capacity, :pricepernight, :avilable)");
+    query.bindValue(":roomnumber", roomnumber);
+    query.bindValue("Roomtype",Roomtype);
+    query.bindValue(":capacity", capacity);
+    query.bindValue("pricepernight",pricepernight);
+    query.bindValue(":available", availability);
+
+    if (!query.exec()) {
+        qDebug() << "Error adding user:" << query.lastError().text();
+        return false; // the database insertion failed
+    }
+
+    // the Room added successfully
+    return true;
+}
+
+
+//this function will update the room information after it is changed in the ui
+bool database::editRoom(int roomnumber, QString roomtype, int capacity, double pricepernight, bool availability) {
+    QSqlQuery query;
+    query.prepare("UPDATE Room SET");
+}
+
+//This function will add an amenity to database when the admin adds an amenity
+bool database::addAmenity(QString name, QString description, double price) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO Amenity (Amenity_Name, Description, Price) "
+                  "VALUES (:amenity_name, :description, :price)");
+    query.bindValue(":amenity_name", name);
+    query.bindValue("description",description);
+    query.bindValue(":price", price);
+
+    if (!query.exec()) {
+        qDebug() << "Error adding user:" << query.lastError().text();
+        return false; // the database insertion failed
+    }
+
+    // the Amenity added successfully
+    return true;
+}
+
+//this function will edit/update the amenity into the database when the user updates the amenity in the ui
+bool database::editAmenitity(QString name, QString description, double price) {
+    QSqlQuery query;
+    query.prepare("UPDATE Amenity SET");
+}

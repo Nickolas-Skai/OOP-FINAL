@@ -15,10 +15,6 @@ void Booking::setRoomID(int id) {
     RoomID = id;
 }
 
-void Booking::setAmenityID(int id) {
-    AmenityID = id;
-}
-
 void Booking::setCheckInDate(QString checkinDate) {
     check_in_date = checkinDate;
 }

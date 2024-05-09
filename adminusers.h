@@ -2,9 +2,10 @@
 #define ADMINUSERS_H
 #include <iostream>
 #include "database.h"
+#include <users.h>
 
 
-class Adminusers //derived class of users class
+class Adminusers : public users //derived class of users class
 {
 public:
     Adminusers();
@@ -19,19 +20,22 @@ public:
     QString Delete_User();
 
     //being able to add a room
-    QString Add_Room();
+    QString Add_Room(int roomnumber, QString Roomtype, int capacity, double pricepernight, bool availability);
 
     //being able to edit a room
-    QString Edit_Room();
+    QString Edit_Room(int roomnumber, QString roomtype, int capacity, double pricepernight, bool availability);
+
+    //bieng able to delete a room
+    QString delete_Room(int roomnumber);
 
     //being able to add a amenitie
-    QString Add_Amenitie();
+    QString Add_Amenitie(QString name, QString description, double price);
 
     //being able to edit an amenitie
-    int Edit_Amenities();
+    QString Edit_Amenities(QString name, QString description, double price);
 
     //being able to delete/remove an amenitie
-    int Delete_Amenitie();
+    QString Delete_Amenitie();
 };
 
 #endif // ADMINUSERS_H

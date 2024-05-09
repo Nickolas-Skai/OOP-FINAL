@@ -47,7 +47,7 @@ background-color:rgb(73, 157, 17)}</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
