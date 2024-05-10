@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "database.h"
 #include "users.h"
+#include "adminusers.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
 #include <QPalette>
@@ -91,6 +92,7 @@ users userinstance(userid, fname, lname, usernam, pswd, date_of_birht, phone_num
 //check if its admin by checking if its true at 8
 if(admin == true) {
     //give the admin features such as edit and delete
+
 
 
 } else {

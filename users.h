@@ -1,7 +1,7 @@
 #ifndef USERS_H
 #define USERS_H
 #include <iostream>
-#include "database.h"
+#include <database.h>
 
 class users
 {
@@ -46,6 +46,9 @@ public:
     QString BookRoom();
     QString BookAmenities();
     QString MakePayment();
+
+    //database
+    database db;
 
 };
 

@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "database.h"
+#include <database.h>
+#include "users.h"
+#include "adminusers.h"
 #include <QDateEdit>
 #include <QMainWindow>
 #include <QCalendarWidget>
@@ -63,6 +65,8 @@ private:
     QStandardItemModel *model;
     QStandardItem *item;
     database db;
+    //users users;
+    //Adminusers Adminusers;
 
 };
 #endif // MAINWINDOW_H
