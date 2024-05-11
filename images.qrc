@@ -2,5 +2,6 @@
     <qresource prefix="/.png">
         <file>tropicalbg.png</file>
         <file>icon.png</file>
+        <file>logout.png</file>
     </qresource>
 </RCC>
