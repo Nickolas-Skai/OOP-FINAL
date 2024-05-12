@@ -152,3 +152,4 @@ bool database::editAmenitity(QString name, QString description, double price) {
     QSqlQuery query;
     query.prepare("UPDATE Amenity SET");
 }
+

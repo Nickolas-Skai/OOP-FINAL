@@ -13,9 +13,8 @@
 #include <QDateTimeEdit>
 #include <QMessageBox>
 
-
-//adding comment/
-
+//create a instance of the database
+database db;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -228,6 +227,9 @@ void MainWindow::on_actionSign_out_triggered()
     if (ret == QMessageBox::Yes) {
         // Log out
         ui->stackedWidget->setCurrentIndex(0);
+        //database connection will be closed
+        QMessageBox::information(this, "Sign out", "You have successfully signed out.");
+
     }
 
 }
