@@ -1,5 +1,6 @@
 #include "database.h"
 
+//database constructor which makes the database connection
 database::database()
 {
     //connect to the database
@@ -35,6 +36,8 @@ database::database()
 }
 
 
+
+//database destructor
 database::~database() {
     db.close();
     QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection); //so this removes the database
@@ -42,6 +45,7 @@ database::~database() {
 }
 
 
+///Function to verify a user that is logging into the program////
 QStringList database::VerifyUser(QString userName, QString Passrd) {
     QStringList UserData;
 
@@ -66,13 +70,16 @@ QStringList database::VerifyUser(QString userName, QString Passrd) {
         UserData << query.value("DateOfBirth").toString();
         UserData << query.value("PhoneNum").toString();
         UserData << query.value("Email").toString();
-        UserData << query.value("IsAdmin").toString();
+        //UserData << query.value("IsAdmin").toBool();
+        UserData << (query.value("IsAdmin").toBool() ? "true" : "false");
     }
 
     return UserData;//returns the users data
 }
 
 
+
+///Function that adds a user to the database////
 bool database::addUser(QString firstname, QString lastname, QString username, QString Password, QString phonenum, QString Email, QString dob, bool isadmin) {
     // execute the sql query to insert the new user into the database
     QSqlQuery query;
@@ -96,7 +103,8 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
     return true;
 }
 
-//this function will update the user informatin after it was changed by the admin in the ui
+
+///this function will update the user informatin after it was changed by the admin in the ui////
 bool database::editUser(QString firatname, QString lastname, QString, QString password, QString phoneum, QString email, QString dob, bool isadmin) {
     QSqlQuery query;
     query.prepare("UPDATE User SET");

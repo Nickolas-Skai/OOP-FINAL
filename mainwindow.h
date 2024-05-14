@@ -65,8 +65,8 @@ private:
     QStandardItemModel *model;
     QStandardItem *item;
     database db;
-    //users users;
-    //Adminusers Adminusers;
+    users Currentusers;
+    Adminusers Adminuser;
 
 };
 #endif // MAINWINDOW_H

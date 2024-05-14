@@ -23,10 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //create a instance of the standard item model
     model = new QStandardItemModel(this);
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +50,8 @@ void MainWindow::on_signupbutton_clicked()
 ui->stackedWidget->setCurrentIndex(1);
 }
 
+
+//Login in function
 void MainWindow::on_login_clicked()
 {
     //go to the listingPage if login credentials are correct
@@ -85,22 +83,47 @@ QString email = usercredentials.at(7);
 bool admin = usercredentials.at(8) == "true";
 
 //create an instance of the user through the constructor of user
-users userinstance(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
-
+//users userinstance(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
+//currentusers = users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
 
 //check if its admin by checking if its true at 8
-if(admin == true) {
-    //give the admin features such as edit and delete
+/*if(admin == true) {
+    //create teh admin user intance
+    Adminuser = Adminusers(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
+    //give a message for now that says admin is in, for now this will be shown:
+    QMessageBox::information(this,"Admin login", "Admin has logged in");
+    ui->stackedWidget->setCurrentIndex(4);
+    //give access to the admin users to certain pages
 
-
-
-} else {
+} else if(admin == false){
     //give the regular users the booking features
+    //and create that instance of the base user
+    Currentusers =  users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
+    // Proceed with the login process...
+    ui->stackedWidget->setCurrentIndex(5);
+}*/
+
+// Check if it's admin by checking if it's true at 8
+qDebug() << "Is Admin:" << admin;
+if (admin == true) {
+    // Create the admin user instance
+    Adminuser = Adminusers(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
+    // Give a message for now that says admin is in, for now this will be shown:
+    QMessageBox::information(this,"Admin login", "Admin has logged in");
+    ui->stackedWidget->setCurrentIndex(4);
+    // Give access to the admin users to certain pages
+} else {
+    // Give the regular users the booking features
+    // And create that instance of the base user
+    Currentusers = users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     // Proceed with the login process...
     ui->stackedWidget->setCurrentIndex(5);
 }
 
 }
+
+
+
 
 //this on click is what calls the add user function to add a user to the database
 void MainWindow::on_signup_clicked()
