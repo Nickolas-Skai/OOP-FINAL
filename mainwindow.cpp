@@ -21,8 +21,32 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //create a instance of the standard item model
+    //help me do this part please. I am not sure how to do this
+/*
+    //create a instance of the standard table model to display data from the database
     model = new QStandardItemModel(this);
+    //set the table view to the model
+    ui->personview->setModel(model);
+    //create the table view
+    model->setColumnCount(8);
+    model->setHorizontalHeaderLabels(QStringList() << "ID" << "First Name" << "Last Name" << "Username" << "Password" << "Date of Birth" << "Phone Number" << "Email");
+
+    //query the database for the users
+    QSqlQueryModel *users = db.getUsers();
+    //populate the table view with the users
+    for(int i = 0; i < users->rowCount(); i++){
+        model->setItem(i, 0, new QStandardItem(users->record(i).value("ID").toString()));
+        model->setItem(i, 1, new QStandardItem(users->record(i).value("First Name").toString()));
+        model->setItem(i, 2, new QStandardItem(users->record(i).value("Last Name").toString()));
+        model->setItem(i, 3, new QStandardItem(users->record(i).value("Username").toString()));
+        model->setItem(i, 4, new QStandardItem(users->record(i).value("Password").toString()));
+        model->setItem(i, 5, new QStandardItem(users->record(i).value("Date of Birth").toString()));
+        model->setItem(i, 6, new QStandardItem(users->record(i).value("Phone Number").toString()));
+        model->setItem(i, 7, new QStandardItem(users->record(i).value("Email").toString()));
+    }
+
+    */
+
 }
 
 MainWindow::~MainWindow()
@@ -255,5 +279,40 @@ void MainWindow::on_actionSign_out_triggered()
 
     }
 
+}
+
+
+void MainWindow::on_Delete_Room_clicked()
+{
+
+//delete room
+    // Get the selected room ID
+    QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No room selected
+        QMessageBox::warning(this, "Delete Room", "Please select a room to delete.");
+        return;
+    }
+
+    int roomID = selectedRows.at(0).data().toInt();
+    // Ask the user if they are sure they want to delete the room
+    int ret = QMessageBox::question(this, "Delete Room", "Are you sure you want to delete this room?", QMessageBox::Yes | QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        // Delete the room from the database
+        bool deleted = db.deleteRoom(roomID);
+        if (deleted) {
+            // Room deleted successfully
+            QMessageBox::information(this, "Delete Room", "Room deleted successfully.");
+            // Refresh the table view
+
+           //clears the table view
+            ui->Room_view->clearSelection();
+            //refreshes the table view
+            ui->Room_view->setModel(db.getRooms());
+        } else {
+            // Error deleting room
+            QMessageBox::critical(this, "Delete Room", "Failed to delete room.");
+        }
+    }
 }
 

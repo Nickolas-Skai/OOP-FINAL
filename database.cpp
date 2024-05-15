@@ -161,3 +161,32 @@ bool database::editAmenitity(QString name, QString description, double price) {
     query.prepare("UPDATE Amenity SET");
 }
 
+//query for from the database to get all the people that are in the database
+QSqlQueryModel *database::getUsers() {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM User");
+    return model;
+}
+
+//delete a room from the database
+bool database::deleteRoom(int roomnumber) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM Room WHERE Room_Number = ?");
+    query.bindValue(0, roomnumber);
+
+    if (!query.exec()) {
+        qDebug() << "Error deleting room:" << query.lastError().text();
+        return false; // the database deletion failed
+    }
+
+    // the Room deleted successfully
+    return true;
+}
+
+//gets all the rooms in the database
+QSqlQueryModel *database::getRooms() {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM Room");
+    return model;
+}
+

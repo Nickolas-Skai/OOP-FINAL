@@ -36,6 +36,15 @@ public:
     //update amenity information into the database
     bool editAmenitity(QString name, QString description, double price);
 
+    //get all the users from the database
+    QSqlQueryModel *getUsers();
+
+    //delete a room from the database
+    bool deleteRoom(int roomnumber);
+
+    //gets all the rooms from the database
+    QSqlQueryModel *getRooms();
+
 
 
 

@@ -54,13 +54,13 @@ border: 2px solid red;
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>30</y>
+      <y>10</y>
       <width>991</width>
       <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -881,7 +881,7 @@ padding-bottom:5px</string>
        <rect>
         <x>480</x>
         <y>200</y>
-        <width>250</width>
+        <width>261</width>
         <height>219</height>
        </rect>
       </property>
@@ -923,16 +923,6 @@ padding-bottom:5px</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="priceLabel">
-         <property name="text">
-          <string>Price</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="priceLineEdit"/>
-       </item>
        <item row="6" column="0">
         <widget class="QLabel" name="availabilityLabel">
          <property name="text">
@@ -946,6 +936,16 @@ padding-bottom:5px</string>
           <string>Available</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="priceLabel">
+         <property name="text">
+          <string>Room Price</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="priceLineEdit"/>
        </item>
       </layout>
      </widget>
@@ -993,7 +993,7 @@ padding-bottom:5px</string>
      <widget class="QPushButton" name="Delete_Room">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>250</x>
         <y>140</y>
         <width>111</width>
         <height>29</height>
@@ -1029,6 +1029,19 @@ padding-bottom:5px</string>
        <string>Back to Menu</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>140</y>
+        <width>101</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit Room</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="EditDeleteperson">
      <widget class="QWidget" name="gridLayoutWidget_2">
@@ -1062,7 +1075,7 @@ padding-bottom:5px</string>
         </widget>
        </item>
        <item row="1" column="0" colspan="2">
-        <widget class="QTableWidget" name="personview"/>
+        <widget class="QTableView" name="personview"/>
        </item>
       </layout>
      </widget>

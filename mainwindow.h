@@ -12,7 +12,8 @@
 #include <QListView>
 #include <QStandardItemModel>
 #include <QStandardItem>
-
+#include <QTableView>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -58,6 +59,8 @@ private slots:
     void on_actionSign_out_Exit_triggered();
 
     void on_actionSign_out_triggered();
+
+    void on_Delete_Room_clicked();
 
 private:
     Ui::MainWindow *ui;
