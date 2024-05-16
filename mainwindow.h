@@ -62,6 +62,14 @@ private slots:
 
     void on_Delete_Room_clicked();
 
+    void on_Editperson_2_clicked();
+
+    void on_editroom_clicked();
+
+    void on_Addroom_clicked();
+
+    void on_addperson_clicked();
+
 private:
     Ui::MainWindow *ui;
     //create a list view model

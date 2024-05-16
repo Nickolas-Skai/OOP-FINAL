@@ -13,6 +13,10 @@
 #include <QDateTimeEdit>
 #include <QMessageBox>
 
+/*ADMIN HOME PAGE IS NUMBER 6*/
+
+
+
 //create a instance of the database
 database db;
 MainWindow::MainWindow(QWidget *parent)
@@ -111,7 +115,7 @@ bool admin = usercredentials.at(8) == "true";
 //currentusers = users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
 
 //check if its admin by checking if its true at 8
-/*if(admin == true) {
+if(admin == true) {
     //create teh admin user intance
     Adminuser = Adminusers(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     //give a message for now that says admin is in, for now this will be shown:
@@ -125,25 +129,7 @@ bool admin = usercredentials.at(8) == "true";
     Currentusers =  users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     // Proceed with the login process...
     ui->stackedWidget->setCurrentIndex(5);
-}*/
-
-// Check if it's admin by checking if it's true at 8
-qDebug() << "Is Admin:" << admin;
-if (admin == true) {
-    // Create the admin user instance
-    Adminuser = Adminusers(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
-    // Give a message for now that says admin is in, for now this will be shown:
-    QMessageBox::information(this,"Admin login", "Admin has logged in");
-    ui->stackedWidget->setCurrentIndex(4);
-    // Give access to the admin users to certain pages
-} else {
-    // Give the regular users the booking features
-    // And create that instance of the base user
-    Currentusers = users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
-    // Proceed with the login process...
-    ui->stackedWidget->setCurrentIndex(5);
-}
-
+    }
 }
 
 
@@ -221,32 +207,37 @@ void MainWindow::on_Backtoroom_clicked()
 }
 
 
+//////////////////////////////////////////////////////////////ALL BACK BUTTONS TO GO BACK TO ADMIN MENU PAGE////////////////////////////
+//BACK BUTTON TO GO BACK TO ADMIN MENU PAGE
 void MainWindow::on_b2menu_clicked()
 {
-    //this will take a user back to the menu page
-    ui->stackedWidget->setCurrentIndex(5);
+    //this will take a user back to the admin menu page
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
-
+//BACK BUTTON TO GO BACK TO ADMIN MENU PAGE
 void MainWindow::on_b2menu_2_clicked()
 {
-    //this will take a user back to the menu page
-    ui->stackedWidget->setCurrentIndex(5);
+    //this will take a user back to the admin menu page
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
-
+//BACK BUTTON TO GO BACK TO ADMIN MENU PAGE
 void MainWindow::on_b2menu_3_clicked()
 {
     //this will take a user back to the menu page
-    ui->stackedWidget->setCurrentIndex(5);
+    ui->stackedWidget->setCurrentIndex(6);
 }
 
-
+//BACK BUTTON TO GO BACK TO ADMIN MENU PAGE
 void MainWindow::on_b2menu_4_clicked()
 {
     //this will take a user back to the menu page
-    ui->stackedWidget->setCurrentIndex(5);
+    ui->stackedWidget->setCurrentIndex(6);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 void MainWindow::on_actionSign_out_Exit_triggered()
@@ -282,6 +273,7 @@ void MainWindow::on_actionSign_out_triggered()
 }
 
 
+////////////DELETE BUTTON ON THE EDIT/DELETE ROOM PAGE//////////
 void MainWindow::on_Delete_Room_clicked()
 {
 
@@ -314,5 +306,37 @@ void MainWindow::on_Delete_Room_clicked()
             QMessageBox::critical(this, "Delete Room", "Failed to delete room.");
         }
     }
+}
+
+
+/////////////////////////////ALL BUTTONS THAT ARE IN THE ADMIN OPTION PAGE/////////////////////////////////////////
+
+
+//the Edit/Delete button on the ADMIN OPTION PAGE
+void MainWindow::on_Editperson_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(9);
+    //when clicked it will fill up the table view with the users data
+    ui->personview->setModel(db.getUsers());
+}
+
+//THE EDIT/DELETE BUTTON on the ADMIN OPTION PAGE
+void MainWindow::on_editroom_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(8);
+    //when clicked it will fill up the table view with the users data
+    //ui->personview->setModel(db.getUsers());
+}
+
+//THE ADD ROOM BUTTON ON THE ADMIN MENU OPTION PAGE
+void MainWindow::on_Addroom_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(7);
+}
+
+//THE ADD PERSON BUTTON ON THE ADMIN OPTION PAGE
+void MainWindow::on_addperson_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(10);
 }
 
