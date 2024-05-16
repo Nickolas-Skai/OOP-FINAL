@@ -28,12 +28,12 @@ QLabel {
 QCheckBox {
   color: black;
    font-family: &quot;Sitka Heading Semibold&quot;, sans-serif;
-   font-size: 16px; /* Adjust font size as needed */
+   font-size: 16px; 
 }
 QPushButton {
    color: black;
    font-family: &quot;Sitka Heading Semibold&quot;, sans-serif;
-   font-size: 16px; /* Adjust font size as needed */
+   font-size: 16px; 
 background-color:rgb(73, 157, 17)}
 
 QPushButton:hover
@@ -42,7 +42,7 @@ background: gray;
 }
 QLineEdit:focus
 {
-background:white;
+background:gray;
 border: 2px solid red;
 }
 
@@ -53,14 +53,14 @@ border: 2px solid red;
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>10</y>
       <width>991</width>
       <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>8</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -492,29 +492,15 @@ background-color:rgb(73, 157, 17)</string>
          </item>
         </layout>
        </item>
-       <item row="1" column="1">
-        <widget class="QListView" name="ListingList"/>
-       </item>
        <item row="1" column="0">
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="topMargin">
           <number>11</number>
          </property>
-         <item>
-          <widget class="QCheckBox" name="amenitiesfilter">
-           <property name="text">
-            <string>Amenities</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="Availability_filter">
-           <property name="text">
-            <string>Available</string>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </item>
+       <item row="1" column="1">
+        <widget class="QListWidget" name="listWidget"/>
        </item>
       </layout>
      </widget>
@@ -531,20 +517,7 @@ background-color:rgb(73, 157, 17)</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="label_2">
-         <property name="styleSheet">
-          <string notr="true">text-alignement: center </string>
-         </property>
-         <property name="text">
-          <string>Selected Room </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListView" name="listView"/>
+        <layout class="QGridLayout" name="gridLayout_3"/>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_8">
@@ -565,7 +538,7 @@ padding-bottom:5px</string>
      <widget class="QPushButton" name="Back_2List">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>70</x>
         <y>40</y>
         <width>83</width>
         <height>29</height>
@@ -1294,7 +1267,7 @@ padding-bottom:5px</string>
      <x>0</x>
      <y>0</y>
      <width>1140</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSign_out">
