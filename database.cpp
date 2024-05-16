@@ -105,9 +105,27 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
 
 
 ///this function will update the user informatin after it was changed by the admin in the ui////
-bool database::editUser(QString firatname, QString lastname, QString, QString password, QString phoneum, QString email, QString dob, bool isadmin) {
+bool database::editUser(QString firstname, QString lastname, QString username, QString password, QString phonenum, QString email, QString dob, bool isadmin) {
     QSqlQuery query;
-    query.prepare("UPDATE User SET");
+    query.prepare("UPDATE User SET FirstName = :firstName, LastName = :lastName, UserName = :username, Password = :password, "
+                  "DateOfBrith = :dateOfBirth, PhoneNum = :Phonenum, Email = :email, IsAdmin = :admin WHERE UserID = :userId");
+
+    query.bindValue(":firstName", firstname);
+    query.bindValue(":lastName", lastname);
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
+    query.bindValue(":dateOfBirth", dob);
+    query.bindValue(":Phonenum", phonenum);
+    query.bindValue(":email", email);
+    query.bindValue(":admin", isadmin);
+    //query.bindValue(":userId", userId); ///WE DO NEED THE ID TO EDIT BUT IDK HOW WE GONE GET THAT.
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
 }
 
 //this function will add the room into the database
@@ -133,8 +151,50 @@ bool database::addRoom(int roomnumber, QString Roomtype, int capacity, double pr
 
 //this function will update the room information after it is changed in the ui
 bool database::editRoom(int roomnumber, QString roomtype, int capacity, double pricepernight, bool availability) {
+
+    if (!db.isValid()) {
+        qDebug() << "Database connection is invalid.";
+        return false;
+    }
+
+    if (!db.isOpen()) {
+        qDebug() << "Database connection is not open.";
+        return false;
+    }
+
     QSqlQuery query;
-    query.prepare("UPDATE Room SET");
+    query.prepare("UPDATE Room SET RoomNumber = :roomNumber, RoomType = :roomType, Capacity = :capacity, "
+                  "Price_Per_Night = :pricePerNight, Is_Available = :isAvailable WHERE room_id = :roomId");
+
+    query.bindValue(":roomNumber", roomnumber);
+    query.bindValue(":roomType", roomtype);
+    query.bindValue(":capacity", capacity);
+    query.bindValue(":pricePerNight", pricepernight);
+    query.bindValue(":isAvailable", availability);
+    //query.bindValue(":roomId", roomId); ////I DON'T KNOW ABOUT THESE SINCE WHEN THEY GET INSERTED INTO THE DATABASE THERE ID'S ARE AUTO INCREMENTED
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+
+//delete a room from the database
+bool database::deleteRoom(int RoomId) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM Room WHERE RoomID = ?:d");
+    query.bindValue(":id", RoomId);
+
+    if (!query.exec()) {
+        qDebug() << "Error deleting room:" << query.lastError().text();
+        return false; // the database deletion failed
+    }
+
+    // the Room deleted successfully
+    return true;
 }
 
 //This function will add an amenity to database when the admin adds an amenity
@@ -157,32 +217,35 @@ bool database::addAmenity(QString name, QString description, double price) {
 
 //this function will edit/update the amenity into the database when the user updates the amenity in the ui
 bool database::editAmenitity(QString name, QString description, double price) {
-    QSqlQuery query;
-    query.prepare("UPDATE Amenity SET");
-}
 
-//query for from the database to get all the people that are in the database
-QSqlQueryModel *database::getUsers() {
-    QSqlQueryModel *model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM User");
-    return model;
-}
-
-//delete a room from the database
-bool database::deleteRoom(int roomnumber) {
-    QSqlQuery query;
-    query.prepare("DELETE FROM Room WHERE Room_Number = ?");
-    query.bindValue(0, roomnumber);
-
-    if (!query.exec()) {
-        qDebug() << "Error deleting room:" << query.lastError().text();
-        return false; // the database deletion failed
+    if (!db.isValid()) {
+        qDebug() << "Database connection is invalid.";
+        return false;
     }
 
-    // the Room deleted successfully
+    if (!db.isOpen()) {
+        qDebug() << "Database connection is not open.";
+        return false;
+    }
+
+    QSqlQuery query;
+    query.prepare("UPDATE Amenity SET Amenity_Name = :Name, Description = :desc, Price = :price WHERE amenity_id = :amenityId");
+
+    //query.bindValue(":amenityId", amenity_id); //NEED TO FIGURE THIS OUT AS WELL
+    query.bindValue(":Name", name);
+    query.bindValue(":desc", description);
+    query.bindValue(":price", price);
+
+    if(!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return false;
+    }
+
     return true;
 }
 
+
+//////////////////////////////////////////////// CODE TO GET DATA FROM DATABASE FOR TABLE VIEWS///////////////////////
 //gets all the rooms in the database
 QSqlQueryModel *database::getRooms() {
     QSqlQueryModel *model = new QSqlQueryModel();
@@ -190,4 +253,11 @@ QSqlQueryModel *database::getRooms() {
     return model;
 }
 
+
+//query for from the database to get all the people that are in the database
+QSqlQueryModel *database::getUsers() {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM User");
+    return model;
+}
 

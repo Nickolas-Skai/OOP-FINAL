@@ -70,6 +70,8 @@ private slots:
 
     void on_addperson_clicked();
 
+    void on_CreateUser_clicked();
+
 private:
     Ui::MainWindow *ui;
     //create a list view model

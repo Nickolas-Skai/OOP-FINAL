@@ -58,6 +58,8 @@ QString Adminusers::Edit_User(QString fname, QString lname, QString username, QS
 
 }
 
+
+/////////////////////////////////////////////////////////////ADMIN ROOM FUNCTION////////////////////////////////////////////
 QString Adminusers::Add_Room(int roomnumber, QString Roomtype, int capacity, double pricepernight, bool availability) {
 
     if(!getAdmin()) {
@@ -101,6 +103,27 @@ QString Adminusers::Edit_Room(int roomnumber, QString roomtype, int capacity, do
     }
 
 }
+
+QString Adminusers::delete_Room(int RoomId) {
+    if(!getAdmin()) {
+        return "Error: only admins can edit room.";
+    }
+
+    try
+    {
+        if(db.deleteRoom(RoomId)){
+            throw ("Room Deleted Successfully!");
+        }
+        else{
+            throw ("An error occured while saving to the database!");
+        }
+    }
+    catch(const char * message)
+    {
+        return message;
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QString Adminusers::Add_Amenitie(QString name, QString description, double price) {
 

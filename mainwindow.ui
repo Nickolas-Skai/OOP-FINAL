@@ -60,7 +60,7 @@ border: 2px solid red;
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -1267,7 +1267,7 @@ padding-bottom:5px</string>
      <x>0</x>
      <y>0</y>
      <width>1140</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSign_out">

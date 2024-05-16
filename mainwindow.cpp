@@ -120,7 +120,7 @@ if(admin == true) {
     Adminuser = Adminusers(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     //give a message for now that says admin is in, for now this will be shown:
     QMessageBox::information(this,"Admin login", "Admin has logged in");
-    ui->stackedWidget->setCurrentIndex(4);
+    ui->stackedWidget->setCurrentIndex(6);
     //give access to the admin users to certain pages
 
 } else if(admin == false){
@@ -286,13 +286,14 @@ void MainWindow::on_Delete_Room_clicked()
         return;
     }
 
-    int roomID = selectedRows.at(0).data().toInt();
+    QVariant data = model->data(model->index(currentIndex.row(), 0));
+    int roomID = data.toInt();
     // Ask the user if they are sure they want to delete the room
     int ret = QMessageBox::question(this, "Delete Room", "Are you sure you want to delete this room?", QMessageBox::Yes | QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         // Delete the room from the database
-        bool deleted = db.deleteRoom(roomID);
-        if (deleted) {
+        Adminuser.delete_Room(roomID);
+
             // Room deleted successfully
             QMessageBox::information(this, "Delete Room", "Room deleted successfully.");
             // Refresh the table view
@@ -301,10 +302,6 @@ void MainWindow::on_Delete_Room_clicked()
             ui->Room_view->clearSelection();
             //refreshes the table view
             ui->Room_view->setModel(db.getRooms());
-        } else {
-            // Error deleting room
-            QMessageBox::critical(this, "Delete Room", "Failed to delete room.");
-        }
     }
 }
 
@@ -312,7 +309,7 @@ void MainWindow::on_Delete_Room_clicked()
 /////////////////////////////ALL BUTTONS THAT ARE IN THE ADMIN OPTION PAGE/////////////////////////////////////////
 
 
-//the Edit/Delete button on the ADMIN OPTION PAGE
+//the Edit/Delete PERSON button on the ADMIN OPTION PAGE
 void MainWindow::on_Editperson_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(9);
@@ -320,12 +317,12 @@ void MainWindow::on_Editperson_2_clicked()
     ui->personview->setModel(db.getUsers());
 }
 
-//THE EDIT/DELETE BUTTON on the ADMIN OPTION PAGE
+//THE EDIT/DELETE ROOM BUTTON on the ADMIN OPTION PAGE
 void MainWindow::on_editroom_clicked()
 {
     ui->stackedWidget->setCurrentIndex(8);
     //when clicked it will fill up the table view with the users data
-    //ui->personview->setModel(db.getUsers());
+    ui->Room_view->setModel(db.getRooms());
 }
 
 //THE ADD ROOM BUTTON ON THE ADMIN MENU OPTION PAGE
@@ -338,5 +335,40 @@ void MainWindow::on_Addroom_clicked()
 void MainWindow::on_addperson_clicked()
 {
     ui->stackedWidget->setCurrentIndex(10);
+}
+
+
+/////////////////////////////////////////////////////ADD USER BUTTON FOR ADMINS///////////////////////////
+void MainWindow::on_CreateUser_clicked()
+{
+    //store the values entered in the form:
+    QString firstName = ui->fristNameLineEdit->text();
+    QString Lastname = ui->lastNameLineEdit->text();
+    QString userName = ui->usernameLineEdit->text();
+    QString pswd = ui->passwordLineEdit->text();
+    QString phnNum = ui->phoneNumberLineEdit->text();
+    QString mail = ui->emailLineEdit->text();
+    QDate dobDate = ui->dateEdit->date();
+    if (!dobDate.isValid()) {
+        // Handle incase date of birth is not valid
+        qDebug() << "Date of birth is not valid";
+    }
+
+    // Convert QDate object back to a formatted QString the database will be able to take
+    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
+    //REMOVE THIS ONCE SEO ADDS THE ADMIN OPTION
+    bool admin = false;
+
+    // Check if any of the fields are empty
+    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+        // Show error message using QMessageBox
+        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
+        return; // Exit the function early
+    }
+
+    // Call the addUser function to add the user to the database
+    Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+
+
 }
 
