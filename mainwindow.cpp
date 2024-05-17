@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *pant)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //when you run the code it stack widget will be at 0 (welcome page)
 
 //populateRoomList();
     //help me do this part please. I am not su how to do this
@@ -629,7 +630,7 @@ void MainWindow::on_continuetodetails_clicked()
     ui->amenitiesloeadhere->setText(amenities.join(", "));
 }
 void MainWindow::on_actionView_bookings_triggered()
-{
+{/*
     //will go to view bookings page
     ui->stackedWidget->setCurrentIndex(11);
 
@@ -644,7 +645,7 @@ void MainWindow::on_actionView_bookings_triggered()
         ui->Bookings_view->setModel(db.getBookings(userID));
     }
 
-
+*/
 }
 
 
@@ -656,12 +657,9 @@ void MainWindow::on_gotoroommadd_clicked()
     //will go to the add room page
     ui->stackedWidget->setCurrentIndex(7);
 
-    //clears the fields
-    ui->roomNumberLabel->clear();
-    ui->roomTypeLabel->clear();
-    ui->priceLabel->clear();
-    //uncheck the check box
-    ui->availability_check->setChecked(false);
+   //set the inner stack to 0 index
+    ui->creatingaroom_SIAS->setCurrentIndex(0);
+
 }
 
 
