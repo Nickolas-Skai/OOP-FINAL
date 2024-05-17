@@ -170,16 +170,25 @@ if(admin == true) {
 
     ui->backtodashboard->hide();
 
-    ////LOAD ROOMS TO BE BOOKED IN THE
-    // NAME OF TABLEVIEW: listWidget
-    //ui->listWidget->setModel(db.getRooms());
 
-    //query the database for the rooms
-    //QSqlQueryModel *rooms = db.getRoomdetails();
 
 }
 
-}
+//load the roomview  with the user's information
+//this is to display the room information to the user
+//query the database for the rooms
+QSqlQueryModel *rooms = db.getRoomdetails();
+//populate the tableview  with the rooms for every room
+QStandardItemModel *model = new QStandardItemModel();
+model->setColumnCount(3);
+model->setHorizontalHeaderLabels(QStringList() << "Room Number" << "Room Type" << "Room Description");
+for(int i = 0; i < rooms->rowCount(); i++){
+    model->setItem(i, 0, new QStandardItem(rooms->record(i).value("roomnumber").toString()));
+    model->setItem(i, 1, new QStandardItem(rooms->record(i).value("roomtype").toString()));
+    model->setItem(i, 2, new QStandardItem(rooms->record(i).value("roomdescription").toString()));
+
+
+}}
 
 
 
@@ -570,8 +579,13 @@ void MainWindow::on_Edituserconfim_clicked()
 }
 
 
-void MainWindow::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+
+
+
+
+void MainWindow::on_continuetodetails_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(5);
 
 }
 
