@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *pant)
 {
     ui->setupUi(this);
     //when you run the code it stack widget will be at 0 (welcome page)
-
+    ui->stackedWidget->setCurrentIndex(0);
 //populateRoomList();
     //help me do this part please. I am not su how to do this
 /*
@@ -141,6 +141,20 @@ if(admin == true) {
     //this is to hide all the other buttons that the user should not see only admins
 
     ui->backtodashboard->hide();
+    //querye the database for the rooms
+    QSqlQueryModel *rooms = db.getRooms();
+    //populate the table view with the rooms
+    for(int i = 0; i < rooms->rowCount(); i++){
+        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("ID").toString()));
+        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("Room Number").toString()));
+        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Room Type").toString()));
+        model->setItem(i, 3, new QStandardItem(rooms->record(i).value("Room Price").toString()));
+    }
+
+    //set model to the table view
+    ui->roomView->setModel(model);
+    //set the table view to the model
+
 
 
 

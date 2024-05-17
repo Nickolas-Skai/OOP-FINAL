@@ -950,16 +950,6 @@ padding-bottom:5px</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QSlider" name="capslider">
-           <property name="maximum">
-            <number>5</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="priceLabel">
            <property name="text">
@@ -983,6 +973,16 @@ padding-bottom:5px</string>
             <string>Available</string>
            </property>
           </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="capinputLabel">
+           <property name="text">
+            <string>Capinput</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QLineEdit" name="capinputLineEdit"/>
          </item>
         </layout>
        </widget>

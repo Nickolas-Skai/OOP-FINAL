@@ -64,7 +64,7 @@ private slots:
 
     void on_Editperson_2_clicked();
 
-    void on_editroom_clicked();
+ //   void on_editroom_clicked();
 
     void on_Addroom_clicked();
 
