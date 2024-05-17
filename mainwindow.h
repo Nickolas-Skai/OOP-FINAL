@@ -72,6 +72,15 @@ private slots:
 
     void on_CreateUser_clicked();
 
+    void on_backtodashboard_clicked();
+
+    void on_Checkbookings_clicked();
+
+    void on_Editperson_clicked();
+
+
+    void on_addperson_adminview_clicked();
+
 private:
     Ui::MainWindow *ui;
     //create a list view model

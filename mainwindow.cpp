@@ -17,17 +17,17 @@
 
 
 
-//create a instance of the database
+//cate a instance of the database
 database db;
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *pant)
+    : QMainWindow(pant)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    //help me do this part please. I am not sure how to do this
+    //help me do this part please. I am not su how to do this
 /*
-    //create a instance of the standard table model to display data from the database
+    //cate a instance of the standard table model to display data from the database
     model = new QStandardItemModel(this);
     //set the table view to the model
     ui->personview->setModel(model);
@@ -129,7 +129,12 @@ if(admin == true) {
     Currentusers =  users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     // Proceed with the login process...
     ui->stackedWidget->setCurrentIndex(5);
+    //this is to hide all the other buttons that the user should not see only admins
+
+    ui->backtodashboard->hide();
     }
+
+
 }
 
 
@@ -235,6 +240,13 @@ void MainWindow::on_b2menu_4_clicked()
     //this will take a user back to the menu page
     ui->stackedWidget->setCurrentIndex(6);
 }
+void MainWindow::on_backtodashboard_clicked()
+{
+    //this is will go to the admin menu page
+    ui->stackedWidget->setCurrentIndex(6);
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -368,6 +380,104 @@ void MainWindow::on_CreateUser_clicked()
 
     // Call the addUser function to add the user to the database
     Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+
+
+}
+
+
+
+
+void MainWindow::on_Checkbookings_clicked()
+{
+    //will go to view bookings page
+
+    ui->stackedWidget->setCurrentIndex(11);
+}
+
+
+void MainWindow::on_Editperson_clicked()
+{
+
+    //check if a user is selected
+    QModelIndexList selectedRows = ui->personview->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No user selected
+        QMessageBox::warning(this, "Edit User", "Please select a user to edit.");
+        return;
+    }
+    //if user is selected then go to the edit page
+    ui->stackedWidget->setCurrentIndex(11);
+    //it will change the label to edit user
+    ui->title_signup_2->setText("Edit User:");
+ //it will get the user id
+    //SOMEONE MAKE THIS INTO A FUNCTION
+
+   //////////
+    //will load the user info into the form
+    int userID = selectedRows.at(0).data().toInt();
+    QSqlQuery query;
+    query.prepare("SELECT * FROM users WHERE userID = :userID");
+    query.bindValue(":userID", userID);
+    query.exec();
+    if (query.next()) {
+        // Load the user info into the form
+        ui->fristNameLineEdit->setText(query.value("firstName").toString());
+        ui->lastNameLineEdit->setText(query.value("lastName").toString());
+        ui->usernameLineEdit->setText(query.value("username").toString());
+        ui->passwordLineEdit->setText(query.value("password").toString());
+        ui->phoneNumberLineEdit->setText(query.value("phoneNumber").toString());
+        ui->emailLineEdit->setText(query.value("email").toString());
+        ui->dateEdit->setDate(query.value("dateOfBirth").toDate());
+    }
+
+}
+
+
+
+
+
+
+void MainWindow::on_addperson_adminview_clicked()
+{
+
+    //this will go to the add person page
+    ui->stackedWidget->setCurrentIndex(11);
+    //reset the qlable back to add person
+    ui->title_signup_2->setText("Create a User:");
+    //clear the form
+    //this is incase anthing is left from someone editing a user
+    ui->fristNameLineEdit->clear();
+    ui->lastNameLineEdit->clear();
+    ui->usernameLineEdit->clear();
+    ui->passwordLineEdit->clear();
+    ui->phoneNumberLineEdit->clear();
+    ui->emailLineEdit->clear();
+    ui->dateEdit->setDate(QDate::currentDate());
+
+    //the user will be added to the database based off the information entered
+    //store the values entered in the form:
+    QString firstName = ui->fristNameLineEdit->text();
+    QString Lastname = ui->lastNameLineEdit->text();
+    QString userName = ui->usernameLineEdit->text();
+    QString pswd = ui->passwordLineEdit->text();
+    QString phnNum = ui->phoneNumberLineEdit->text();
+    QString mail = ui->emailLineEdit->text();
+    QDate dobDate = ui->dateEdit->date();
+    bool admin = false;
+
+    // Check if any of the fields are empty
+    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+        // Show error message using QMessageBox
+        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
+        return; // Exit the function early
+    }
+
+    // Convert QDate object back to a formatted QString the database will be able to take
+    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
+
+    //call the add user function
+    Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+
 
 
 }
