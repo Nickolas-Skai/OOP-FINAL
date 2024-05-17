@@ -423,7 +423,11 @@ void MainWindow::on_Editperson_clicked()
     ui->stackedWidget->setCurrentIndex(10);
     //it will change the label to edit user
     ui->title_signup_2->setText("Edit User:");
- //it will get the user id
+    //this will hide the create user button
+    ui->CreateUser->hide();
+
+
+
     //SOMEONE MAKE THIS INTO A FUNCTION
 
    //////////
