@@ -144,24 +144,19 @@ if(admin == true) {
     //load the roomview  with the user's information
     //this is to display the room information to the user
     //query the database for the rooms
-    QSqlQueryModel *rooms = db.getRoomdetails();
-    //populate the tableview  with the rooms for every room
-    QStandardItemModel *model = new QStandardItemModel();
-    model->setColumnCount(3);
-    model->setHorizontalHeaderLabels(QStringList() << "Room Number" << "Room Type" << "Room Price");
+    QSqlQueryModel *rooms = db.getRooms();
+
+    //populate the table view with the rooms
     for(int i = 0; i < rooms->rowCount(); i++){
-        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("RoomNumber").toString()));
-        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("RoomType").toString()));
-        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Price_Per_Night").toString()));
-
-
+        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("ID").toString()));
+        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("Room Number").toString()));
+        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Room Type").toString()));
+        model->setItem(i, 3, new QStandardItem(rooms->record(i).value("Room Price").toString()));
+        model->setItem(i, 4, new QStandardItem(rooms->record(i).value("Room Status").toString()));
+        model->setItem(i, 5, new QStandardItem(rooms->record(i).value("Room Capacity").toString()));
     }
-
-    //set the table view to the model
-    ui->roomView->setModel(model);
-    ui->stackedWidget->setCurrentIndex(3);
-
 }
+
 
 };
 
@@ -308,6 +303,10 @@ void MainWindow::on_actionSign_out_triggered()
         QMessageBox::information(this, "Sign out", "You have successfully signed out.");
 
     }
+    //clear the line edits
+    ui->user_input->clear();
+    ui->pass_input->clear();
+
 
 }
 
@@ -360,12 +359,6 @@ void MainWindow::on_Editperson_2_clicked()
 }
 
 //THE EDIT/DELETE ROOM BUTTON on the ADMIN OPTION PAGE
-void MainWindow::on_editroom_clicked()
-{
-    ui->stackedWidget->setCurrentIndex(8);
-    //when clicked it will fill up the table view with the users data
-    ui->Room_view->setModel(db.getRooms());
-}
 
 //THE ADD ROOM BUTTON ON THE ADMIN MENU OPTION PAGE
 void MainWindow::on_Addroom_clicked()
@@ -444,12 +437,17 @@ void MainWindow::on_Editperson_clicked()
         QMessageBox::warning(this, "Edit User", "Please select a user to edit.");
         return;
     }
+
     //if user is selected then go to the edit page
     ui->stackedWidget->setCurrentIndex(10);
     //it will change the label to edit use
     ui->CreateUser->hide();
     //edit user button will be shown
     ui->Edituserconfim->show();
+    //hide user id label and line edit
+    ui->useridLabel->hide();
+    ui->useridLineEdit->hide();
+
 
     int userID = selectedRows.at(0).data().toInt();
     // Get the user details
@@ -484,6 +482,25 @@ void MainWindow::on_addperson_adminview_clicked()
 {
     //this will go to the add person page
     ui->stackedWidget->setCurrentIndex(10);
+    //hide the userid label and the user id line edit
+    ui->useridLabel->hide();
+    ui->useridLineEdit->hide();
+
+ //it will clear all the fields
+    ui->fristNameLineEdit_2->clear();
+    ui->lastNameLineEdit_2->clear();
+    ui->usernameLineEdit_2->clear();
+    ui->passwordLineEdit_2->clear();
+    ui->phoneNumberLineEdit_2->clear();
+    ui->emailLineEdit_2->clear();
+    ui->dateEdit_3->clear();
+    ui->AdminCheckBox->setChecked(false);
+
+    //it will change the label to add user
+    ui->Edituserconfim->hide();
+    //edit user button will be shown
+    ui->CreateUser->show();
+
 }
 
 
@@ -635,4 +652,57 @@ void MainWindow::on_actionView_bookings_triggered()
 }
 
 
+
+
+
+void MainWindow::on_gotoroommadd_clicked()
+{
+    //will go to the add room page
+    ui->stackedWidget->setCurrentIndex(7);
+
+    //clears the fields
+    ui->roomNumberLabel->clear();
+    ui->roomTypeLabel->clear();
+    ui->priceLabel->clear();
+    //uncheck the check box
+    ui->availability_check->setChecked(false);
+}
+
+
+void MainWindow::on_editroom_2_clicked()
+{
+    //create a qfourm widget to pop out a message so that the user can select editthe room that they selected
+    QMessageBox::information(this, "Edit Room", "Please select a room to edit.");
+    // Check if a room is selected
+    QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No room selected
+        QMessageBox::warning(this, "Edit Room", "Please select a room to edit.");
+        return;
+    }
+
+
+    // If room is selected then it will create a pop up that has a area to edit the feild of the room
+    ui->stackedWidget->setCurrentIndex(6);
+}
+
+
+void MainWindow::on_Roommanagment_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(8);
+    //when clicked it will fill up the table view with the users data
+    ui->Room_view->setModel(db.getRooms());
+}
+
+
+void MainWindow::on_personmanagment_clicked()
+{
+
+}
+
+
+void MainWindow::on_ViewListings_clicked()
+{
+
+}
 

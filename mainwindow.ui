@@ -63,7 +63,7 @@ QDateTimeEdit
      </rect>
     </property>
     <property name="currentIndex">
-     <number>10</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -249,37 +249,23 @@ background-color:rgb(73, 157, 17)</string>
           <widget class="QLineEdit" name="phoneNumberLineEdit"/>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="adressLabel">
-           <property name="text">
-            <string>Adress</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="adressLineEdit">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
           <widget class="QLabel" name="emailLabel">
            <property name="text">
             <string>Email</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="5" column="1">
           <widget class="QLineEdit" name="emailLineEdit"/>
          </item>
-         <item row="7" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="dateofBirthLabel">
            <property name="text">
             <string>DateofBirth</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="1">
+         <item row="6" column="1">
           <widget class="QDateEdit" name="dateEdit"/>
          </item>
         </layout>
@@ -825,7 +811,7 @@ padding-bottom:5px</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="1" column="0">
-        <widget class="QPushButton" name="editroom">
+        <widget class="QPushButton" name="Roommanagment">
          <property name="styleSheet">
           <string notr="true">background-color:rgb(73, 157, 17)</string>
          </property>
@@ -845,7 +831,7 @@ padding-bottom:5px</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="Editperson_2">
+        <widget class="QPushButton" name="personmanagment">
          <property name="styleSheet">
           <string notr="true">background-color:rgb(73, 157, 17)</string>
          </property>
@@ -855,7 +841,7 @@ padding-bottom:5px</string>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QPushButton" name="addperson">
+        <widget class="QPushButton" name="ViewListings">
          <property name="styleSheet">
           <string notr="true">background-color:rgb(73, 157, 17)</string>
          </property>
@@ -924,7 +910,7 @@ padding-bottom:5px</string>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="roompage">
        <widget class="QWidget" name="formLayoutWidget">
@@ -992,7 +978,7 @@ padding-bottom:5px</string>
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="availability_check">
            <property name="text">
             <string>Available</string>
            </property>
@@ -1000,7 +986,7 @@ padding-bottom:5px</string>
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="addamenites">
         <property name="geometry">
          <rect>
           <x>302</x>
@@ -1106,7 +1092,7 @@ border-radius: 10px
        <string>Back to Menu</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="editroom_2">
       <property name="geometry">
        <rect>
         <x>560</x>
@@ -1117,6 +1103,19 @@ border-radius: 10px
       </property>
       <property name="text">
        <string>Edit Room</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="gotoroommadd">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>140</y>
+        <width>91</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add a Room</string>
       </property>
      </widget>
     </widget>
@@ -1193,7 +1192,7 @@ border-radius: 10px
         <x>430</x>
         <y>160</y>
         <width>287</width>
-        <height>300</height>
+        <height>310</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1257,45 +1256,41 @@ border-radius: 10px
           <widget class="QLineEdit" name="phoneNumberLineEdit_2"/>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="adressLabel_2">
-           <property name="text">
-            <string>Adress</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="adressLineEdit_2">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
           <widget class="QLabel" name="emailLabel_2">
            <property name="text">
             <string>Email</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="5" column="1">
           <widget class="QLineEdit" name="emailLineEdit_2"/>
          </item>
-         <item row="7" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="dateofBirthLabel_2">
            <property name="text">
             <string>DateofBirth</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="1">
+         <item row="6" column="1">
           <widget class="QDateEdit" name="dateEdit_3"/>
          </item>
-         <item row="8" column="1">
+         <item row="7" column="1">
           <widget class="QCheckBox" name="AdminCheckBox">
            <property name="text">
             <string>IsAdmin</string>
            </property>
           </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="useridLabel">
+           <property name="text">
+            <string>userid</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QLineEdit" name="useridLineEdit"/>
          </item>
         </layout>
        </item>
@@ -1388,7 +1383,7 @@ border-radius: 10px
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>460</x>
         <y>80</y>
         <width>151</width>
         <height>20</height>
