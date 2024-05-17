@@ -98,6 +98,9 @@ public:
     QString getAmenityname(int AmenityID);
     QString getAmnityDescription(int amenityID);
     double getAmenityPrice(int amenityID);
+//get room booking
+
+   //int getBookings(int userID);
 
 
 };

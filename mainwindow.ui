@@ -63,7 +63,7 @@ QDateTimeEdit
      </rect>
     </property>
     <property name="currentIndex">
-     <number>11</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -500,7 +500,67 @@ background-color:rgb(73, 157, 17)</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <layout class="QGridLayout" name="gridLayout_3"/>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="1" column="1">
+          <widget class="QLabel" name="roomtype_2">
+           <property name="text">
+            <string>Room Type:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="ppernight">
+           <property name="text">
+            <string>Prince Per Night: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1" colspan="2">
+          <widget class="QLabel" name="amenitiesloeadhere">
+           <property name="text">
+            <string>DIFFAMENITES </string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1" colspan="2">
+          <widget class="QLabel" name="desctitle">
+           <property name="text">
+            <string>Description:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="roomnumberhere">
+           <property name="text">
+            <string>Room Number :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="ameniltestitle">
+           <property name="text">
+            <string>Avalable Amenities</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1" colspan="2">
+          <widget class="QLabel" name="descinfo">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="2">
+          <widget class="QLabel" name="roomstatus">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_8">
@@ -1357,7 +1417,14 @@ border-radius: 10px
     <addaction name="actionSign_out_Exit"/>
     <addaction name="actionSign_out"/>
    </widget>
+   <widget class="QMenu" name="menuView_Confirmed_Bookings">
+    <property name="title">
+     <string>View Confirmed Bookings</string>
+    </property>
+    <addaction name="actionView_bookings"/>
+   </widget>
    <addaction name="menuSign_out"/>
+   <addaction name="menuView_Confirmed_Bookings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -1384,6 +1451,11 @@ border-radius: 10px
    </property>
    <property name="text">
     <string>Sign out</string>
+   </property>
+  </action>
+  <action name="actionView_bookings">
+   <property name="text">
+    <string>View bookings</string>
    </property>
   </action>
  </widget>

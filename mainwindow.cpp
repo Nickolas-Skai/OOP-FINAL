@@ -560,7 +560,51 @@ void MainWindow::on_Edituserconfim_clicked()
 
 void MainWindow::on_continuetodetails_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(5);
+    //check if a room is selected
+    QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No room selected
+        QMessageBox::warning(this, "Edit Room", "Please select a room to edit.");
+        return;
+    }
+    //if room is selected then go to the next page
+    ui->stackedWidget->setCurrentIndex(5);//should be the if loaded
+
+    //queries the room selected
+    int roomID = selectedRows.at(0).data().toInt();
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Rooms WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+    query.exec();
+    query.next();
+    //fills the form with the room details
+    ui->roomnumberhere->setText(query.value("RoomNumber").toString());
+    ui->roomtype_2->setText(query.value("RoomType").toString());
+    ui->ppernight->setText(query.value("Price").toString());
+    ui->descinfo->setText(query.value("Description").toString());
+    ui->roomstatus->setText(query.value("Status").toString());
+
+    //quieres for the amenites of the room
+    QSqlQuery query2;
+    query2.prepare("SELECT * FROM RoomAmenities WHERE RoomID = :roomID");
+    query2.bindValue(":roomID", roomID);
+    query2.exec();
+    query2.next();
+    //fills the form with the room details
+    //idk if this will work but i will try
+    ui->amenitiesloeadhere->setText(query2.value("AmenityName").toString());
+
+
 
 }
+void MainWindow::on_actionView_bookings_triggered()
+{
+    //will go to view bookings page
+    ui->stackedWidget->setCurrentIndex(11);
+    //load the bookings
+
+
+}
+
+
 

@@ -1,5 +1,6 @@
 #include "database.h"
-
+#include <string>
+using namespace std;
 //database constructor which makes the database connection
 database::database()
 {
@@ -444,16 +445,23 @@ int database::getroomNumber(int roomID) {
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return ""; // Return an empty string if the query fails
+
+        return 0; // Return an empty string if the query fails
     }
 
     if (query.next()) {
-        int roomnumber = query.value("RoomNumber").toString();
+        bool ok;
+        int roomnumber = query.value("RoomNumber").toInt(&ok);
+        if (!ok) {
+            qDebug() << "Error converting RoomNumber to int";
+            return 0;
+        }
         return roomnumber;
     } else {
         qDebug() << "room not found for ID:" << roomID;
-        return ""; // Return an empty string if no user is found for the given ID
+        return 0; // Return an empty string if no user is found for the given ID
     }
+    return 0;
 }
 
 QString database::getRoomType(int roomID) {
@@ -473,6 +481,7 @@ QString database::getRoomType(int roomID) {
         qDebug() << "room not found for ID:" << roomID;
         return ""; // Return an empty string if no user is found for the given ID
     }
+    return "";
 }
 
 int database::getroomCapacity(int roomID) {
@@ -482,17 +491,23 @@ int database::getroomCapacity(int roomID) {
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return ""; // Return an empty string if the query fails
+        return 0; // Return an empty string if the query fails
     }
 
     if (query.next()) {
-        QString capacity = query.value("Capacity").toString();
-        return capacity;
+        bool ok ;
+
+        int  capacity = query.value("Capacity").toInt(&ok);
+        if (ok)
+        {
+            return capacity;}
     } else {
         qDebug() << "room not found for ID:" << roomID;
-        return ""; // Return an empty string if no user is found for the given ID
+        return 0; // Return an empty string if no user is found for the given ID
     }
+    return 0;
 }
+
 
 double database::getroomprice(int roomID) {
     QSqlQuery query;
@@ -501,16 +516,25 @@ double database::getroomprice(int roomID) {
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return ""; // Return an empty string if the query fails
+        return 0.0; // Return 0.0 if the query fails
     }
 
     if (query.next()) {
-        double Price = query.value("Price_Per_Night").toString();
-        return Price;
+        bool ok;
+        double price = query.value("Price_Per_Night").toDouble(&ok);
+        if (ok) {
+            return price;
+        } else {
+            qDebug() << "Conversion error: Price_Per_Night is not a valid double";
+            return 0.0; // Return 0.0 if conversion fails
+        }
     } else {
-        qDebug() << "User not found for ID:" << roomID;
-        return ""; // Return an empty string if no user is found for the given ID
+        qDebug() << "Room not found for ID:" << roomID;
+        return 0.0; // Return 0.0 if no room is found for the given ID
     }
+
+ // return statement
+    return 0.0;
 }
 
 
@@ -533,6 +557,7 @@ QString database::getAmenityname(int AmenityID) {
         qDebug() << "Amenity not found for ID:" << AmenityID;
         return ""; // Return an empty string if no user is found for the given ID
     }
+    return "";
 }
 
 QString database::getAmnityDescription(int amenityID) {
@@ -552,6 +577,7 @@ QString database::getAmnityDescription(int amenityID) {
         qDebug() << "Amenity not found for ID:" << amenityID;
         return ""; // Return an empty string if no user is found for the given ID
     }
+    return "";
 }
 
 
@@ -562,14 +588,51 @@ double database::getAmenityPrice(int amenityID) {
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return ""; // Return an empty string if the query fails
+        return 0.0; // Return an empty string if the query fails
     }
 
     if (query.next()) {
-        QString price = query.value("Price").toString();
+        bool ok;
+        double price = query.value("Price").toDouble(&ok);
+        if (!ok) {
+            qDebug() << "Error converting Price to double";
+            return 0.0;
+        }
         return price;
     } else {
         qDebug() << "amenity not found for ID:" << amenityID;
-        return ""; // Return an empty string if no user is found for the given ID
+        return 0.0; // Return an empty string if no user is found for the given ID
     }
+    return 0.0;
 }
+
+
+/////////////////////////GET FOR RESERVATION///////////////////////
+
+int database::getBookings( int userID) {
+    QSqlQuery query;
+
+    query.prepare("SELECT BookingID FROM Reservation WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return 0; // Return 0 if the query fails
+    }
+
+    if (query.next()) {
+        bool ok;
+        int bookingID = query.value("BookingID").toInt(&ok);
+        if (!ok) {
+            qDebug() << "Error converting BookingID to int";
+            return 0;
+        }
+        return bookingID;
+    } else {
+        qDebug() << "Booking not found for ID:" << userID;
+        return 0; // Return 0 if no booking is found for the given ID
+    }
+
+}
+
+
