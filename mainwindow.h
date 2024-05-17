@@ -93,11 +93,11 @@ private:
     Adminusers Adminuser;
 
 private slots:
-    void populateRoomList();
+    //void populateRoomList();
 
 
     void on_Edituserconfim_clicked();
-    void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    //void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void on_continuetodetails_clicked();
 };
 

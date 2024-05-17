@@ -296,3 +296,280 @@ QSqlQueryModel *database::getRoomdetails() {
         model->setQuery("SELECT FirstName FROM User WHERE UserID = " + QString::number(userID));
         return model;
 }*/
+
+/////////////////////////////////////ALL THE GETS /////////////////////////////////
+QString database::getuserfisrtname(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT FirstName FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString firstName = query.value("FirstName").toString();
+        return firstName;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+QString database::getuserlastname(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT LastName FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString lastname = query.value("LastName").toString();
+        return lastname;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+QString database::getuserUserName(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT UserName FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString username = query.value("UserName").toString();
+        return username;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+QString database::getuserpassword(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT Password FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString password = query.value("Password").toString();
+        return password;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+QString database::getuserDateofBirth(int userID){
+    QSqlQuery query;
+    query.prepare("SELECT DateOFBirth FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString dateofBirth = query.value("DateOfBirth").toString();
+        return dateofBirth;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+QString database::getuserPhoneNum(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT PhoneNum FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString phonenumber = query.value("PhoneNum").toString();
+        return phonenumber;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+QString database::getuserEmail(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT Email FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString mail = query.value("Email").toString();
+        return mail;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+
+/////////////////////////GET FOR ROOMS///////////////////////
+int database::getroomNumber(int roomID) {
+    QSqlQuery query;
+    query.prepare("SELECT RoomNumber FROM Room WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        int roomnumber = query.value("RoomNumber").toString();
+        return roomnumber;
+    } else {
+        qDebug() << "room not found for ID:" << roomID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+QString database::getRoomType(int roomID) {
+    QSqlQuery query;
+    query.prepare("SELECT RoomType FROM Room WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString Roomtype = query.value("RoomType").toString();
+        return Roomtype;
+    } else {
+        qDebug() << "room not found for ID:" << roomID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+int database::getroomCapacity(int roomID) {
+    QSqlQuery query;
+    query.prepare("SELECT Capacity FROM Room WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString capacity = query.value("Capacity").toString();
+        return capacity;
+    } else {
+        qDebug() << "room not found for ID:" << roomID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+double database::getroomprice(int roomID) {
+    QSqlQuery query;
+    query.prepare("SELECT Price_Per_Night FROM Room WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        double Price = query.value("Price_Per_Night").toString();
+        return Price;
+    } else {
+        qDebug() << "User not found for ID:" << roomID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+
+/////////////////////////////////////GETS FOR AMENITIES/////////////////////
+QString database::getAmenityname(int AmenityID) {
+    QSqlQuery query;
+    query.prepare("SELECT Amenity_Name FROM Amenity WHERE AmenityID = :AmenityID");
+    query.bindValue(":AemnityID", AmenityID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString amenityName = query.value("Amenity_Name").toString();
+        return amenityName;
+    } else {
+        qDebug() << "Amenity not found for ID:" << AmenityID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+QString database::getAmnityDescription(int amenityID) {
+    QSqlQuery query;
+    query.prepare("SELECT Description FROM Amenity WHERE AmenityID = :amenityID");
+    query.bindValue(":amenityID", amenityID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString description = query.value("Description").toString();
+        return description;
+    } else {
+        qDebug() << "Amenity not found for ID:" << amenityID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
+
+
+double database::getAmenityPrice(int amenityID) {
+    QSqlQuery query;
+    query.prepare("SELECT Price FROM Amenity WHERE AmenityID = :amenityID");
+    query.bindValue(":amenityID", amenityID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        QString price = query.value("Price").toString();
+        return price;
+    } else {
+        qDebug() << "amenity not found for ID:" << amenityID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}

@@ -71,6 +71,34 @@ public:
     QSqlQueryModel *getRoomdetails();
 
     //getuser details
-    QSqlQueryModel *getuserfisrtname(int userID);
+    //QSqlQueryModel *getuserfisrtname(int userID);
+
+    /////////////////////////////////GETS FOR USER SO THEY CAN BE DISPLAYED ON THE FIELDS WHEN BEING EDITED////////////////////////////////
+    QString getuserfisrtname(int userID);
+
+    QString getuserlastname(int userID);
+    QString getuserUserName(int userID);
+    QString getuserpassword(int userID);
+    QString getuserDateofBirth(int userID);
+    QString getuserPhoneNum(int userID);
+    QString getuserEmail(int userID);
+    //get the bool
+    //QString getuser
+
+    ///////////////////////////////GETS FOR ROOMS SO THEY CAN BE DISPLAYED ON THE FIELDS WHEN BEING EDITED///////////////////////////////
+    int getroomNumber(int roomID);
+    QString getRoomType(int roomID);
+    int getroomCapacity(int roomID);
+    double getroomprice(int rooomID);
+    //
+    //QString getavailabitlity(int roomID);
+
+
+    //////////////////////////////////////////GETS FOR AMENITIES SO THEY CAN BE DISPLAYED ON THE FIELDS WHEN BEING EDITED////////////////////
+    QString getAmenityname(int AmenityID);
+    QString getAmnityDescription(int amenityID);
+    double getAmenityPrice(int amenityID);
+
+
 };
 #endif // DATABASE_H

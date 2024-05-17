@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *pant)
 {
     ui->setupUi(this);
 
-populateRoomList();
+//populateRoomList();
     //help me do this part please. I am not su how to do this
 /*
     //cate a instance of the standard table model to display data from the database
@@ -141,29 +141,28 @@ if(admin == true) {
 
     ui->backtodashboard->hide();
 
+    //load the roomview  with the user's information
+    //this is to display the room information to the user
+    //query the database for the rooms
+    QSqlQueryModel *rooms = db.getRoomdetails();
+    //populate the tableview  with the rooms for every room
+    QStandardItemModel *model = new QStandardItemModel();
+    model->setColumnCount(3);
+    model->setHorizontalHeaderLabels(QStringList() << "Room Number" << "Room Type" << "Room Price");
+    for(int i = 0; i < rooms->rowCount(); i++){
+        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("RoomNumber").toString()));
+        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("RoomType").toString()));
+        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Price_Per_Night").toString()));
 
+
+    }
+
+    //set the table view to the model
+    ui->roomView->setModel(model);
+    ui->stackedWidget->setCurrentIndex(3);
 
 }
 
-//load the roomview  with the user's information
-//this is to display the room information to the user
-//query the database for the rooms
-QSqlQueryModel *rooms = db.getRoomdetails();
-//populate the tableview  with the rooms for every room
-QStandardItemModel *model = new QStandardItemModel();
-model->setColumnCount(3);
-model->setHorizontalHeaderLabels(QStringList() << "Room Number" << "Room Type" << "Room Description");
-for(int i = 0; i < rooms->rowCount(); i++){
-    model->setItem(i, 0, new QStandardItem(rooms->record(i).value("roomnumber").toString()));
-    model->setItem(i, 1, new QStandardItem(rooms->record(i).value("roomtype").toString()));
-    model->setItem(i, 2, new QStandardItem(rooms->record(i).value("roomdescription").toString()));
-
-
-}
-
-//set the table view to the model
-ui->roomView->setModel(model);
-ui->stackedWidget->setCurrentIndex(3);
 };
 
 
