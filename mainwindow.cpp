@@ -453,21 +453,22 @@ void MainWindow::on_Editperson_clicked()
 
     int userID = selectedRows.at(0).data().toInt();
     // Get the user details
-    QSqlQuery query;
+    /*QSqlQuery query;
     query.prepare("SELECT * FROM Users WHERE UserID = :userID");
     query.bindValue(":userID", userID);
     query.exec();
-    query.next();
+    query.next();*/
 
     // Fill in the form with the user details
-    ui->fristNameLineEdit_2->setText(query.value("FirstName").toString());
-    ui->lastNameLineEdit_2->setText(query.value("LastName").toString());
-    ui->usernameLineEdit_2->setText(query.value("Username").toString());
-    ui->passwordLineEdit_2->setText(query.value("Password").toString());
-    ui->phoneNumberLineEdit_2->setText(query.value("PhoneNumber").toString());
-    ui->emailLineEdit_2->setText(query.value("Email").toString());
-    ui->dateEdit_3->setDate(query.value("DateOfBirth").toDate());
-    ui->AdminCheckBox->setChecked(query.value("Admin").toBool());
+
+    ui->fristNameLineEdit_2->setText(db.getuserfisrtname(userID));
+    ui->lastNameLineEdit_2->setText(db.getuserlastname(userID));
+    ui->usernameLineEdit_2->setText(db.getuserUserName(userID));
+    ui->passwordLineEdit_2->setText(db.getuserpassword(userID));
+    ui->phoneNumberLineEdit_2->setText(db.getuserPhoneNum(userID));
+    ui->emailLineEdit_2->setText(db.getuserEmail(userID));
+    ui->dateEdit_3->setDate(db.getuserDateofBirth(userID));
+    ui->AdminCheckBox->setChecked(db.getuseradmin(userID));
 
 
 
@@ -528,7 +529,7 @@ void MainWindow::on_Deleteperson_clicked()
 
 void MainWindow::on_Edituserconfim_clicked()
 {
-      QString firstName = ui->fristNameLineEdit_2->text();
+    QString firstName = ui->fristNameLineEdit_2->text();
     QString Lastname = ui->lastNameLineEdit_2->text();
     QString userName = ui->usernameLineEdit_2->text();
     QString pswd = ui->passwordLineEdit_2->text();
@@ -545,12 +546,25 @@ void MainWindow::on_Edituserconfim_clicked()
     QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
 
     // Check if any of the fields are empty
-    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+    /*if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
         // Show error message using QMessageBox
         QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
         return; // Exit the function early
-    }
+    }*/
 
+    //call the funciton
+    QString useredited = Adminuser.Edit_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+    if (useredited == "User Edited Successfully!") {
+        // Room deleted successfully
+        QMessageBox::information(this, "User Edited", "User Edited Successfully!");
+
+        // Refresh the table view
+        ui->personview->setModel(db.getUsers());
+        ui->stackedWidget->setCurrentIndex(9);
+    } else {
+        // Error deleting room
+        QMessageBox::critical(this, "User Edited", useredited);
+    }
 }
 
 

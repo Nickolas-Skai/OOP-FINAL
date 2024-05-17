@@ -22,7 +22,7 @@ public:
     //adding a user
     bool addUser(QString firstname, QString lastname, QString username, QString Password, QString phonenum, QString Email, QString dob, bool isadmin);
     //edit/update user information
-    bool editUser(QString firatname, QString lastname, QString, QString password, QString phoneum, QString email, QString dob, bool isadmin);
+    bool editUser(/*int userID,*/ QString firatname, QString lastname, QString, QString password, QString phoneum, QString email, QString dob, bool isadmin);
     //delete a user
     bool deleteUser(int userId);
     //////////////////////////////////ROOM BOOKING DATABASE FUNCTIONS//////////////////
@@ -79,11 +79,11 @@ public:
     QString getuserlastname(int userID);
     QString getuserUserName(int userID);
     QString getuserpassword(int userID);
-    QString getuserDateofBirth(int userID);
+    QDate getuserDateofBirth(int userID);
     QString getuserPhoneNum(int userID);
     QString getuserEmail(int userID);
     //get the bool
-    //QString getuser
+    bool getuseradmin(int userID);
 
     ///////////////////////////////GETS FOR ROOMS SO THEY CAN BE DISPLAYED ON THE FIELDS WHEN BEING EDITED///////////////////////////////
     int getroomNumber(int roomID);
@@ -100,7 +100,7 @@ public:
     double getAmenityPrice(int amenityID);
 //get room booking
 
-   //int getBookings(int userID);
+   int getBookings(int userID);
 
 
 };

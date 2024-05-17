@@ -1,5 +1,6 @@
 #include "database.h"
 #include <string>
+#include <QDate>
 using namespace std;
 //database constructor which makes the database connection
 database::database()
@@ -106,10 +107,10 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
 
 
 ///this function will update the user informatin after it was changed by the admin in the ui////
-bool database::editUser(QString firstname, QString lastname, QString username, QString password, QString phonenum, QString email, QString dob, bool isadmin) {
+bool database::editUser(/*int UserId,*/ QString firstname, QString lastname, QString username, QString password, QString phonenum, QString email, QString dob, bool isadmin) {
     QSqlQuery query;
     query.prepare("UPDATE User SET FirstName = :firstName, LastName = :lastName, UserName = :username, Password = :password, "
-                  "DateOfBrith = :dateOfBirth, PhoneNum = :Phonenum, Email = :email, IsAdmin = :admin WHERE UserID = :userId");
+                  "DateOfBirth = :dateOfBirth, PhoneNum = :Phonenum, Email = :email, IsAdmin = :admin WHERE UserID = :userId");
 
     query.bindValue(":firstName", firstname);
     query.bindValue(":lastName", lastname);
@@ -378,22 +379,35 @@ QString database::getuserpassword(int userID) {
 }
 
 
-QString database::getuserDateofBirth(int userID){
+QDate database::getuserDateofBirth(int userID){
     QSqlQuery query;
-    query.prepare("SELECT DateOFBirth FROM User WHERE UserID = :userID");
+    query.prepare("SELECT DateOfBirth FROM User WHERE UserID = :userID");
     query.bindValue(":userID", userID);
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
-        return ""; // Return an empty string if the query fails
+        return QDate(); // Return a default QDate object if the query fails
     }
 
     if (query.next()) {
-        QString dateofBirth = query.value("DateOfBirth").toString();
-        return dateofBirth;
+        QString dateOfBirthString = query.value("DateOfBirth").toString();
+        // Log the retrieved string for debugging
+        qDebug() << "Retrieved date of birth string:" << dateOfBirthString;
+
+        // Convert the date string to a QDate object
+        QDate dateOfBirth = QDate::fromString(dateOfBirthString, "yyyy-MM-dd");
+
+        // Check if the conversion is successful
+        if (!dateOfBirth.isValid()) {
+            qDebug() << "Invalid date format retrieved from the database:" << dateOfBirthString;
+        } else {
+            qDebug() << "Valid date of birth retrieved:" << dateOfBirth.toString("yyyy-MM-dd");
+        }
+
+        return dateOfBirth;
     } else {
         qDebug() << "User not found for ID:" << userID;
-        return ""; // Return an empty string if no user is found for the given ID
+        return QDate(); // Return a default QDate object if no user is found for the given ID
     }
 }
 
@@ -435,6 +449,24 @@ QString database::getuserEmail(int userID) {
     }
 }
 
+bool database::getuseradmin(int userID) {
+    QSqlQuery query;
+    query.prepare("SELECT IsAdmin FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return ""; // Return an empty string if the query fails
+    }
+
+    if (query.next()) {
+        bool admin = query.value("IsAdmin").toBool();
+        return admin;
+    } else {
+        qDebug() << "User not found for ID:" << userID;
+        return ""; // Return an empty string if no user is found for the given ID
+    }
+}
 
 
 /////////////////////////GET FOR ROOMS///////////////////////
