@@ -95,6 +95,8 @@ private:
 private slots:
     void populateRoomList();
 
+
+    void on_Edituserconfim_clicked();
 };
 
 #endif // MAINWINDOW_H

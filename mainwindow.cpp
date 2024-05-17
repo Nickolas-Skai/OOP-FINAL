@@ -458,58 +458,30 @@ void MainWindow::on_Editperson_clicked()
     }
     //if user is selected then go to the edit page
     ui->stackedWidget->setCurrentIndex(10);
-    //it will change the label to edit user
-    ui->title_signup_2->setText("Edit User:");
-    //this will hide the create user button
+    //it will change the label to edit use
     ui->CreateUser->hide();
     //edit user button will be shown
     ui->Edituserconfim->show();
-    //edit user botton will have slot to edit user
-    ui->Edituserconfim->setText("Edit User");
+
     int userID = selectedRows.at(0).data().toInt();
-    db.getUser(userID);
+    // Get the user details
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Users WHERE UserID = :userID");
+    query.bindValue(":userID", userID);
+    query.exec();
+    query.next();
+
+    // Fill in the form with the user details
+    ui->fristNameLineEdit_2->setText(query.value("FirstName").toString());
+    ui->lastNameLineEdit_2->setText(query.value("LastName").toString());
+    ui->usernameLineEdit_2->setText(query.value("Username").toString());
+    ui->passwordLineEdit_2->setText(query.value("Password").toString());
+    ui->phoneNumberLineEdit_2->setText(query.value("PhoneNumber").toString());
+    ui->emailLineEdit_2->setText(query.value("Email").toString());
+    ui->dateEdit_3->setDate(query.value("DateOfBirth").toDate());
+    ui->AdminCheckBox->setChecked(query.value("Admin").toBool());
 
 
-    //idk man
-
-    //this will fill up the form with the users data
-    const User& user = db.getUser(userID);
-    ui->fristNameLineEdit_2->setText(user.getFirstName());
-    ui->lastNameLineEdit_2->setText(user.getLastName());
-    ui->usernameLineEdit_2->setText(user.getUsername());
-    ui->passwordLineEdit_2->setText(user.getPassword());
-    ui->phoneNumberLineEdit_2->setText(user.getPhoneNumber());
-    ui->emailLineEdit_2->setText(user.getEmail());
-    ui->dateEdit_3->setDate(user.getDateOfBirth());
-    ui->AdminCheckBox->setChecked(user.getAdmin());
-    //this will fill up the form with the users data
-
-
-    ///this will go into the edit user slot
-/*    QString firstName = ui->fristNameLineEdit_2->text();
-    QString Lastname = ui->lastNameLineEdit_2->text();
-    QString userName = ui->usernameLineEdit_2->text();
-    QString pswd = ui->passwordLineEdit_2->text();
-    QString phnNum = ui->phoneNumberLineEdit_2->text();
-    QString mail = ui->emailLineEdit_2->text();
-    QDate dobDate = ui->dateEdit_3->date();
-    bool admin= ui->AdminCheckBox->isChecked();
-    if (!dobDate.isValid()) {
-        // Handle incase date of birth is not valid
-        qDebug() << "Date of birth is not valid";
-    }
-
-    // Convert QDate object back to a formatted QString the database will be able to take
-    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
-
-    // Check if any of the fields are empty
-    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
-        // Show error message using QMessageBox
-        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
-        return; // Exit the function early
-    }
-    */
-       /////////
 
 
 
@@ -564,4 +536,32 @@ void MainWindow::on_Deleteperson_clicked()
 
 
 
+
+
+void MainWindow::on_Edituserconfim_clicked()
+{
+      QString firstName = ui->fristNameLineEdit_2->text();
+    QString Lastname = ui->lastNameLineEdit_2->text();
+    QString userName = ui->usernameLineEdit_2->text();
+    QString pswd = ui->passwordLineEdit_2->text();
+    QString phnNum = ui->phoneNumberLineEdit_2->text();
+    QString mail = ui->emailLineEdit_2->text();
+    QDate dobDate = ui->dateEdit_3->date();
+    bool admin= ui->AdminCheckBox->isChecked();
+    if (!dobDate.isValid()) {
+        // Handle incase date of birth is not valid
+        qDebug() << "Date of birth is not valid";
+    }
+
+    // Convert QDate object back to a formatted QString the database will be able to take
+    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
+
+    // Check if any of the fields are empty
+    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+        // Show error message using QMessageBox
+        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
+        return; // Exit the function early
+    }
+
+}
 

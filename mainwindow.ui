@@ -56,14 +56,14 @@ QDateTimeEdit
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>20</y>
       <width>991</width>
       <height>621</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -1323,6 +1323,19 @@ border-radius: 10px
        <string>Back to Menu</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="Edituserconfim">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>520</y>
+        <width>83</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit User </string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="viewbookings">
      <widget class="QPushButton" name="pushButton_2">
@@ -1370,7 +1383,7 @@ border-radius: 10px
      <x>0</x>
      <y>0</y>
      <width>1140</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSign_out">

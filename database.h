@@ -64,6 +64,13 @@ public:
     //get all the users from the database
     QSqlQueryModel *getUsers();
 
+     //get a specific user from the database
+    QSqlQueryModel *getUser(int userId);
 
+    //room details
+    QSqlQueryModel *getRoomdetails();
+
+    //getuser details
+    QSqlQueryModel *getuserfisrtname(int userID);
 };
 #endif // DATABASE_H
