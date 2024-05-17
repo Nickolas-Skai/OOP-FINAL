@@ -16,7 +16,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     room.cpp \
-    roomdisplay.cpp \
     users.cpp
 
 HEADERS += \
@@ -26,7 +25,6 @@ HEADERS += \
     database.h \
     mainwindow.h \
     room.h \
-    roomdisplay.h \
     users.h
 
 FORMS += \
