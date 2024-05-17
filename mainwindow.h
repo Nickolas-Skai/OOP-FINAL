@@ -98,6 +98,7 @@ private slots:
 
     void on_Edituserconfim_clicked();
     void on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void on_continuetodetails_clicked();
 };
 
 #endif // MAINWINDOW_H
