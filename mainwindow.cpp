@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 #include "users.h"
-#include "roomdisplay.h"
 #include <QPixmap>
 #include <QPalette>
 #include <QBrush>
@@ -12,6 +11,7 @@
 #include <QCalendarWidget>
 #include <QDateTimeEdit>
 #include <QMessageBox>
+#include <QSqlRecord>
 
 /*ADMIN HOME PAGE IS NUMBER 6*/
 
@@ -175,22 +175,7 @@ if(admin == true) {
     //ui->listWidget->setModel(db.getRooms());
 
     //query the database for the rooms
-    QSqlQueryModel *rooms = db.getRoomdetails();
-
-    //populate the list widget with the rooms for every room
-    QListWidgetItem *item;
-    for(int i = 0; i < rooms->rowCount(); i++){
-        item = new QListWidgetItem();
-        QString roomnumber = rooms->query().value("RoomNumber").toString();
-        QString roomtype = rooms->query().value("RoomType").toString();
-        QString roomPrice = rooms->query().value("Price_Per_Night").toString();
-
-        // Assuming you have a RoomDisplay widget
-        RoomDisplay *roomDisplay = new RoomDisplay(this);
-        roomDisplay->setRoomDetails(roomtype, roomPrice, roomnumber); // Assuming the order of parameters matches the setRoomDetails function
-        roomDisplay->show();
-
-    }
+    //QSqlQueryModel *rooms = db.getRoomdetails();
 
 }
 
