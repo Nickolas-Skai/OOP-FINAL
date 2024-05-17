@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *pant)
 {
     ui->setupUi(this);
 
+
     //help me do this part please. I am not su how to do this
 /*
     //cate a instance of the standard table model to display data from the database
@@ -46,6 +47,8 @@ MainWindow::MainWindow(QWidget *pant)
     }
 
     */
+
+
 
 }
 
@@ -451,14 +454,20 @@ void MainWindow::on_Editperson_clicked()
         return; // Exit the function early
     }
 
-    //check if anything was changed if nothing was changed then prompt the user to change something or ask to procreed with out changes
-    if (firstName == db.getFirstName() && Lastname == db.getLastName() && userName == db.getUserName() && pswd == db.getPassword() && phnNum == db.getPhoneNumber() && mail == db.getEmail() && formattedDateOfBirth == db.getDateOfBirth() && admin == db.getAdmin()) {
-        // No changes were made
-        QMessageBox::information(this, "Edit User", "No changes were made.");
-        return;
+    //edit user function
+    QString edituser = Adminuser.Edit_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+    // Check if the deletion was successful
+    if (edituser == "User Edited Successfully!") {
+        // Room deleted successfully
+        QMessageBox::information(this, "Edit User", "User edited successfully.");
+
+        // Refresh the table view
+        ui->personview->setModel(db.getUsers());
+    } else {
+        // Error deleting room
+        QMessageBox::critical(this, "Edit User", edituser);
     }
-    // Call the addUser function to add the user to the database
-    QString newuser = Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+
 
 
 
@@ -499,6 +508,8 @@ void MainWindow::on_Deleteperson_clicked()
         if (result == "Person Deleted Successfully!") {
             // Room deleted successfully
             QMessageBox::information(this, "Delete Person", "Person deleted successfully.");
+            //clears the view person view
+            ui->personview->clearSpans();
 
             // Refresh the table view
             ui->personview->setModel(db.getUsers());
