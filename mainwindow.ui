@@ -63,7 +63,7 @@ QDateTimeEdit
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">

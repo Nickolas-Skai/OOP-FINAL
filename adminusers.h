@@ -19,7 +19,7 @@ public:
     //being able to delete a user
     //this might change and the delete will happen in the table view using
     //the simple delete table view method
-    QString Delete_User();
+    QString Delete_User(int Userid);
 
 
     //being able to add a room
@@ -31,7 +31,7 @@ public:
     //bieng able to delete a room
     //this might change and the delete will happen in the table view using
     //the simple delete table view method
-    QString delete_Room(int roomnumber);
+    QString delete_Room(int roomID);
 
     //being able to add a amenitie
     QString Add_Amenitie(QString name, QString description, double price);

@@ -80,6 +80,8 @@ private slots:
 
     void on_addperson_adminview_clicked();
 
+    void on_Deleteperson_clicked();
+
 private:
     Ui::MainWindow *ui;
     //create a list view model

@@ -128,6 +128,21 @@ bool database::editUser(QString firstname, QString lastname, QString username, Q
     return true;
 }
 
+bool database::deleteUser(int userid) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM User WHERE UserID = :id");
+    query.bindValue(":id", userid);
+
+    if (!query.exec()) {
+        qDebug() << "Error deleting room:" << query.lastError().text();
+        return false; // the database deletion failed
+    }
+
+    // the Room deleted successfully
+    return true;
+}
+
+
 //this function will add the room into the database
 bool database::addRoom(int roomnumber, QString Roomtype, int capacity, double pricepernight, bool availability) {
     QSqlQuery query;

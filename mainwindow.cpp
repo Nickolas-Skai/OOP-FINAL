@@ -131,7 +131,7 @@ if(admin == true) {
 
     ////LOAD ROOMS TO BE BOOKED IN THE
     // NAME OF TABLEVIEW: listWidget
-    ui->listWidget->setModel(db.getRooms());
+    //ui->listWidget->setModel(db.getRooms());
 
 }
 
@@ -356,13 +356,13 @@ void MainWindow::on_addperson_clicked()
 void MainWindow::on_CreateUser_clicked()
 {
     //store the values entered in the form:
-    QString firstName = ui->fristNameLineEdit->text();
-    QString Lastname = ui->lastNameLineEdit->text();
-    QString userName = ui->usernameLineEdit->text();
-    QString pswd = ui->passwordLineEdit->text();
-    QString phnNum = ui->phoneNumberLineEdit->text();
-    QString mail = ui->emailLineEdit->text();
-    QDate dobDate = ui->dateEdit->date();
+    QString firstName = ui->fristNameLineEdit_2->text();
+    QString Lastname = ui->lastNameLineEdit_2->text();
+    QString userName = ui->usernameLineEdit_2->text();
+    QString pswd = ui->passwordLineEdit_2->text();
+    QString phnNum = ui->phoneNumberLineEdit_2->text();
+    QString mail = ui->emailLineEdit_2->text();
+    QDate dobDate = ui->dateEdit_3->date();
     bool admin= ui->AdminCheckBox->isChecked();
     if (!dobDate.isValid()) {
         // Handle incase date of birth is not valid
@@ -374,11 +374,11 @@ void MainWindow::on_CreateUser_clicked()
     //REMOVE THIS ONCE SEO ADDS THE ADMIN OPTION
 
     // Check if any of the fields are empty
-    /*if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
         // Show error message using QMessageBox
         QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
         return; // Exit the function early
-    }*/
+    }
 
 
     // Call the addUser function to add the user to the database
@@ -452,5 +452,39 @@ void MainWindow::on_addperson_adminview_clicked()
 {
     //this will go to the add person page
     ui->stackedWidget->setCurrentIndex(10);
+}
+
+
+void MainWindow::on_Deleteperson_clicked()
+{
+    //delete Person
+    // Get the selected room ID
+    QModelIndexList selectedRows = ui->personview->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No room selected
+        QMessageBox::warning(this, "Delete Room", "Please select a room to delete.");
+        return;
+    }
+
+    int userID = selectedRows.at(0).data().toInt();
+
+    // Ask the user if they are sure they want to delete the room
+    int ret = QMessageBox::question(this, "Delete Room", "Are you sure you want to delete this room?", QMessageBox::Yes | QMessageBox::No);
+    if (ret == QMessageBox::Yes) {
+        // Delete the room from the database
+        QString result = Adminuser.Delete_User(userID);
+
+        // Check if the deletion was successful
+        if (result == "Person Deleted Successfully!") {
+            // Room deleted successfully
+            QMessageBox::information(this, "Delete Person", "Person deleted successfully.");
+
+            // Refresh the table view
+            ui->personview->setModel(db.getUsers());
+        } else {
+            // Error deleting room
+            QMessageBox::critical(this, "Delete Person", result);
+        }
+    }
 }
 
