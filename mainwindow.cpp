@@ -389,7 +389,7 @@ void MainWindow::on_CreateUser_clicked()
         QMessageBox::information(this, "Delete Room", "Room deleted successfully.");
 
         // Refresh the table view
-        ui->Room_view->setModel(db.getUsers());
+        ui->personview->setModel(db.getUsers());
     } else {
         // Error deleting room
         QMessageBox::critical(this, "Delete Room", newuser);
@@ -426,26 +426,39 @@ void MainWindow::on_Editperson_clicked()
    //////////
     //will load the user info into the form
     int userID = selectedRows.at(0).data().toInt();
-    QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE userID = :userID");
-    query.bindValue(":userID", userID);
-    query.exec();
-    if (query.next()) {
-        // Load the user info into the form fields to be edited by the admin user
-        ui->fristNameLineEdit_2->setText(query.value(1).toString());
-        ui->lastNameLineEdit_2->setText(query.value(2).toString());
-        ui->usernameLineEdit_2->setText(query.value(3).toString());
-        ui->passwordLineEdit_2->setText(query.value(4).toString());
-        ui->phoneNumberLineEdit_2->setText(query.value(5).toString());
-        ui->emailLineEdit_2->setText(query.value(6).toString());
-        ui->dateEdit_3->setDate(query.value(7).toDate());
-        ui->AdminCheckBox->setChecked(query.value(8).toBool());
-    } else {
-        // Error loading user info
-        QMessageBox::critical(this, "Edit User", "Error loading user info.");
-
+    db.getUser(userID);
+    //store the values to be entered in the form:
+    QString firstName = ui->fristNameLineEdit_2->text();
+    QString Lastname = ui->lastNameLineEdit_2->text();
+    QString userName = ui->usernameLineEdit_2->text();
+    QString pswd = ui->passwordLineEdit_2->text();
+    QString phnNum = ui->phoneNumberLineEdit_2->text();
+    QString mail = ui->emailLineEdit_2->text();
+    QDate dobDate = ui->dateEdit_3->date();
+    bool admin= ui->AdminCheckBox->isChecked();
+    if (!dobDate.isValid()) {
+        // Handle incase date of birth is not valid
+        qDebug() << "Date of birth is not valid";
     }
 
+    // Convert QDate object back to a formatted QString the database will be able to take
+    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
+
+    // Check if any of the fields are empty
+    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+        // Show error message using QMessageBox
+        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
+        return; // Exit the function early
+    }
+
+    //check if anything was changed if nothing was changed then prompt the user to change something or ask to procreed with out changes
+    if (firstName == db.getFirstName() && Lastname == db.getLastName() && userName == db.getUserName() && pswd == db.getPassword() && phnNum == db.getPhoneNumber() && mail == db.getEmail() && formattedDateOfBirth == db.getDateOfBirth() && admin == db.getAdmin()) {
+        // No changes were made
+        QMessageBox::information(this, "Edit User", "No changes were made.");
+        return;
+    }
+    // Call the addUser function to add the user to the database
+    QString newuser = Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
 
 
 
@@ -477,16 +490,19 @@ void MainWindow::on_Deleteperson_clicked()
     int userID = selectedRows.at(0).data().toInt();
 
     // Ask the user if they are sure they want to delete the room
-    int ret = QMessageBox::question(this, "Delete Person", "Are you sure you want to delete this user?", QMessageBox::Yes | QMessageBox::No);
+    int ret = QMessageBox::question(this, "Delete Person", "Are you sure you want to delete this person?", QMessageBox::Yes | QMessageBox::No);
     if (ret == QMessageBox::Yes) {
-        // Delete the person from the database
+        // Delete the room from the database
         QString result = Adminuser.Delete_User(userID);
+
         // Check if the deletion was successful
         if (result == "Person Deleted Successfully!") {
             // Room deleted successfully
             QMessageBox::information(this, "Delete Person", "Person deleted successfully.");
+
             // Refresh the table view
             ui->personview->setModel(db.getUsers());
+
         } else {
             // Error deleting room
             QMessageBox::critical(this, "Delete Person", result);
