@@ -159,7 +159,12 @@ for(int i = 0; i < rooms->rowCount(); i++){
     model->setItem(i, 2, new QStandardItem(rooms->record(i).value("roomdescription").toString()));
 
 
-}};
+}
+
+//set the table view to the model
+ui->roomView->setModel(model);
+ui->stackedWidget->setCurrentIndex(3);
+};
 
 
 
