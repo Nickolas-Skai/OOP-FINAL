@@ -11,6 +11,7 @@
 #include <QStandardItem>
 #include <QTableView>
 #include <QMessageBox>
+#include <QListWidget>
 
 #include <adminusers.h>
 
@@ -91,5 +92,11 @@ private:
     users Currentusers;
     Adminusers Adminuser;
 
+private slots:
+    void populateRoomList();
+
 };
+
+#endif // MAINWINDOW_H
+
 #endif // MAINWINDOW_H

@@ -273,6 +273,39 @@ QSqlQueryModel *database::getRooms() {
 QSqlQueryModel *database::getUsers() {
     QSqlQueryModel *model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM User");
+    //pointer to firstname
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("First Name"));
+
+    //pointer to lastname
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Last Name"));
+    //pointer to username
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Username"));
+    //pointer to phone number
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Phone Number"));
+    //pointer to email
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Email"));
+    //pointer to date of birth
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Date of Birth"));
+    //pointer to is admin
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("Is Admin"));
     return model;
 }
+//get a specific user from the database
+QSqlQueryModel *database::getUser(int userID) {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM User WHERE UserID = " + QString::number(userID));
+    return model;
+}
+//get all rooms in the database number ,descritpion  and price
+QSqlQueryModel *database::getRoomdetails() {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT Room_Number, Room_Type, Price_Per_Night FROM Room");
+    return model;
 
+}
+    //queries for the database to a specific user in the database first name , last name, user name, phone number, email, date of birth, and if they are an admin
+    QSqlQueryModel *database::getuserdetails( int userID) {
+        QSqlQueryModel *model = new QSqlQueryModel();
+        model->setQuery("SELECT FirstName, LastName, UserName, PhoneNum, Email, DateOfBirth, IsAdmin FROM User WHERE UserID = " + QString::number(userID));
+        return model;
+    }

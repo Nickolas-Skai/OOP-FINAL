@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "database.h"
+#include "users.h"
 #include <QPixmap>
 #include <QPalette>
 #include <QBrush>
@@ -21,7 +23,7 @@ MainWindow::MainWindow(QWidget *pant)
 {
     ui->setupUi(this);
 
-
+populateRoomList();
     //help me do this part please. I am not su how to do this
 /*
     //cate a instance of the standard table model to display data from the database
@@ -60,13 +62,37 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::populateRoomList() {
+    // Assuming ui->roomListWidget is your QListWidget
+    ui->listWidget->clear();
+    //query the database for the rooms
+\
+    \
 
-
+}
+//change the page to the login page and load rooms to be displayed
 void MainWindow::on_loginbutton_clicked()
 {
     //will go to the login page in the stack
     ui->stackedWidget->setCurrentIndex(2);
-//will make connections to the database
+
+    //for every record in the database add the room to the list adding it to an apporiate widget to display
+
+    //query the database for the rooms
+    QSqlQueryModel *rooms = db.getRoomdetails();
+
+    //populate the list widget with the rooms for every room
+    QListWidgetItem *item;
+    for(int i = 0; i < rooms->rowCount(); i++){
+        item = new QListWidgetItem();
+       QString roomnumber = rooms->query().value("roomnumber").toString();
+       QString roomtype = rooms->query().value("roomtype").toString();
+       QString roomdescription = rooms->query().value("roomdescription").toString();
+        ui->listWidget->addItem(item);
+    }
+
+
+
 }
 
 
@@ -96,6 +122,8 @@ QStringList usercredentials = db.VerifyUser(usrname, passrd);
 if (usercredentials.isEmpty()) {
     QMessageBox::warning(this, "Login Failed", "Invalid username or password.");
     return;
+
+
 }
 
 //and extract the information
@@ -425,17 +453,31 @@ void MainWindow::on_Editperson_clicked()
     ui->title_signup_2->setText("Edit User:");
     //this will hide the create user button
     ui->CreateUser->hide();
-
-
-
-    //SOMEONE MAKE THIS INTO A FUNCTION
-
-   //////////
-    //will load the user info into the form
+    //edit user button will be shown
+    ui->Edituserconfim->show();
+    //edit user botton will have slot to edit user
+    ui->Edituserconfim->setText("Edit User");
     int userID = selectedRows.at(0).data().toInt();
     db.getUser(userID);
-    //store the values to be entered in the form:
-    QString firstName = ui->fristNameLineEdit_2->text();
+
+
+    //idk man
+
+    //this will fill up the form with the users data
+    const User& user = db.getUser(userID);
+    ui->fristNameLineEdit_2->setText(user.getFirstName());
+    ui->lastNameLineEdit_2->setText(user.getLastName());
+    ui->usernameLineEdit_2->setText(user.getUsername());
+    ui->passwordLineEdit_2->setText(user.getPassword());
+    ui->phoneNumberLineEdit_2->setText(user.getPhoneNumber());
+    ui->emailLineEdit_2->setText(user.getEmail());
+    ui->dateEdit_3->setDate(user.getDateOfBirth());
+    ui->AdminCheckBox->setChecked(user.getAdmin());
+    //this will fill up the form with the users data
+
+
+    ///this will go into the edit user slot
+/*    QString firstName = ui->fristNameLineEdit_2->text();
     QString Lastname = ui->lastNameLineEdit_2->text();
     QString userName = ui->usernameLineEdit_2->text();
     QString pswd = ui->passwordLineEdit_2->text();
@@ -457,26 +499,12 @@ void MainWindow::on_Editperson_clicked()
         QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
         return; // Exit the function early
     }
-
-    //edit user function
-    QString edituser = Adminuser.Edit_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
-    // Check if the deletion was successful
-    if (edituser == "User Edited Successfully!") {
-        // Room deleted successfully
-        QMessageBox::information(this, "Edit User", "User edited successfully.");
-
-        // Refresh the table view
-        ui->personview->setModel(db.getUsers());
-    } else {
-        // Error deleting room
-        QMessageBox::critical(this, "Edit User", edituser);
-    }
+    */
+       /////////
 
 
 
-
-}
-
+};
 
 
 
@@ -524,4 +552,7 @@ void MainWindow::on_Deleteperson_clicked()
         }
     }
 }
+
+
+
 
