@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "database.h"
 #include "users.h"
+#include "roomdisplay.h"
 #include <QPixmap>
 #include <QPalette>
 #include <QBrush>
@@ -164,7 +165,7 @@ if(admin == true) {
     //and create that instance of the base user
     Currentusers =  users(userid, fname, lname, usernam, pswd, date_of_birht, phone_number, email, admin);
     // Proceed with the login process...
-    ui->stackedWidget->setCurrentIndex(5);
+    ui->stackedWidget->setCurrentIndex(3);
     //this is to hide all the other buttons that the user should not see only admins
 
     ui->backtodashboard->hide();
@@ -172,6 +173,24 @@ if(admin == true) {
     ////LOAD ROOMS TO BE BOOKED IN THE
     // NAME OF TABLEVIEW: listWidget
     //ui->listWidget->setModel(db.getRooms());
+
+    //query the database for the rooms
+    QSqlQueryModel *rooms = db.getRoomdetails();
+
+    //populate the list widget with the rooms for every room
+    QListWidgetItem *item;
+    for(int i = 0; i < rooms->rowCount(); i++){
+        item = new QListWidgetItem();
+        QString roomnumber = rooms->query().value("RoomNumber").toString();
+        QString roomtype = rooms->query().value("RoomType").toString();
+        QString roomPrice = rooms->query().value("Price_Per_Night").toString();
+
+        // Assuming you have a RoomDisplay widget
+        RoomDisplay *roomDisplay = new RoomDisplay(this);
+        roomDisplay->setRoomDetails(roomtype, roomPrice, roomnumber); // Assuming the order of parameters matches the setRoomDetails function
+        roomDisplay->show();
+
+    }
 
 }
 
@@ -213,7 +232,7 @@ void MainWindow::on_signup_clicked()
     if (userAdded) {
         // User added successfully
         // Proceed to the login page
-        ui->stackedWidget->setCurrentIndex(2); // Go to login page
+        ui->stackedWidget->setCurrentIndex(3); // Go to login page
     } else {
         // Error adding user to the database
         // display error message using QMessageBox
@@ -562,6 +581,12 @@ void MainWindow::on_Edituserconfim_clicked()
         QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
         return; // Exit the function early
     }
+
+}
+
+
+void MainWindow::on_listWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
 
 }
 

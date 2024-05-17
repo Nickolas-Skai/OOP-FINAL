@@ -19,3 +19,4 @@ void RoomDisplay::setRoomDetails(const QString &roomType, const QString &roomDes
     roomDescriptionLabel->setText("Description: " + roomDescription);
     priceLabel->setText("Price: " + price);
 }
+
