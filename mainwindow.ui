@@ -63,7 +63,7 @@ QDateTimeEdit
      </rect>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="Welcome">
      <widget class="QWidget" name="verticalLayoutWidget_2">
@@ -1106,7 +1106,7 @@ border-radius: 10px
         <height>531</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout" rowstretch="4,3,0" rowminimumheight="4,0,0">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="4,3" rowminimumheight="4,0">
        <property name="topMargin">
         <number>10</number>
        </property>
@@ -1267,7 +1267,7 @@ border-radius: 10px
           <widget class="QDateEdit" name="dateEdit_3"/>
          </item>
          <item row="8" column="1">
-          <widget class="QCheckBox" name="checkBox_5">
+          <widget class="QCheckBox" name="AdminCheckBox">
            <property name="text">
             <string>IsAdmin</string>
            </property>
@@ -1370,7 +1370,7 @@ border-radius: 10px
      <x>0</x>
      <y>0</y>
      <width>1140</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSign_out">

@@ -1,6 +1,6 @@
 #ifndef AMENITIES_H
 #define AMENITIES_H
-#include "database.h"
+#include <adminusers.h>
 
 class Amenities
 {

@@ -1,7 +1,4 @@
 #include "mainwindow.h"
-#include "database.h"
-#include "users.h"
-#include "adminusers.h"
 #include "ui_mainwindow.h"
 #include <QPixmap>
 #include <QPalette>
@@ -18,7 +15,6 @@
 
 
 //cate a instance of the database
-database db;
 MainWindow::MainWindow(QWidget *pant)
     : QMainWindow(pant)
     , ui(new Ui::MainWindow)
@@ -132,11 +128,14 @@ if(admin == true) {
     //this is to hide all the other buttons that the user should not see only admins
 
     ui->backtodashboard->hide();
-    }
 
+    ////LOAD ROOMS TO BE BOOKED IN THE
+    // NAME OF TABLEVIEW: listWidget
+    ui->listWidget->setModel(db.getRooms());
 
 }
 
+}
 
 
 
@@ -298,22 +297,25 @@ void MainWindow::on_Delete_Room_clicked()
         return;
     }
 
-    QVariant data = model->data(model->index(currentIndex.row(), 0));
-    int roomID = data.toInt();
+    int roomID = selectedRows.at(0).data().toInt();
+
     // Ask the user if they are sure they want to delete the room
     int ret = QMessageBox::question(this, "Delete Room", "Are you sure you want to delete this room?", QMessageBox::Yes | QMessageBox::No);
     if (ret == QMessageBox::Yes) {
         // Delete the room from the database
-        Adminuser.delete_Room(roomID);
+        QString result = Adminuser.delete_Room(roomID);
 
+        // Check if the deletion was successful
+        if (result == "Room Deleted Successfully!") {
             // Room deleted successfully
             QMessageBox::information(this, "Delete Room", "Room deleted successfully.");
-            // Refresh the table view
 
-           //clears the table view
-            ui->Room_view->clearSelection();
-            //refreshes the table view
+            // Refresh the table view
             ui->Room_view->setModel(db.getRooms());
+        } else {
+            // Error deleting room
+            QMessageBox::critical(this, "Delete Room", result);
+        }
     }
 }
 
@@ -361,6 +363,7 @@ void MainWindow::on_CreateUser_clicked()
     QString phnNum = ui->phoneNumberLineEdit->text();
     QString mail = ui->emailLineEdit->text();
     QDate dobDate = ui->dateEdit->date();
+    bool admin= ui->AdminCheckBox->isChecked();
     if (!dobDate.isValid()) {
         // Handle incase date of birth is not valid
         qDebug() << "Date of birth is not valid";
@@ -369,22 +372,30 @@ void MainWindow::on_CreateUser_clicked()
     // Convert QDate object back to a formatted QString the database will be able to take
     QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
     //REMOVE THIS ONCE SEO ADDS THE ADMIN OPTION
-    bool admin = false;
 
     // Check if any of the fields are empty
-    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
+    /*if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
         // Show error message using QMessageBox
         QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
         return; // Exit the function early
-    }
+    }*/
+
 
     // Call the addUser function to add the user to the database
-    Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+    QString newuser = Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
+    // Check if the deletion was successful
+    if (newuser == "Room Deleted Successfully!") {
+        // Room deleted successfully
+        QMessageBox::information(this, "Delete Room", "Room deleted successfully.");
 
-
+        // Refresh the table view
+        ui->Room_view->setModel(db.getRooms());
+    } else {
+        // Error deleting room
+        QMessageBox::critical(this, "Delete Room", newuser);
+    }
 }
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 void MainWindow::on_Checkbookings_clicked()
@@ -406,7 +417,7 @@ void MainWindow::on_Editperson_clicked()
         return;
     }
     //if user is selected then go to the edit page
-    ui->stackedWidget->setCurrentIndex(11);
+    ui->stackedWidget->setCurrentIndex(10);
     //it will change the label to edit user
     ui->title_signup_2->setText("Edit User:");
  //it will get the user id
@@ -436,49 +447,10 @@ void MainWindow::on_Editperson_clicked()
 
 
 
-
+////////////////////////Button
 void MainWindow::on_addperson_adminview_clicked()
 {
-
     //this will go to the add person page
-    ui->stackedWidget->setCurrentIndex(11);
-    //reset the qlable back to add person
-    ui->title_signup_2->setText("Create a User:");
-    //clear the form
-    //this is incase anthing is left from someone editing a user
-    ui->fristNameLineEdit->clear();
-    ui->lastNameLineEdit->clear();
-    ui->usernameLineEdit->clear();
-    ui->passwordLineEdit->clear();
-    ui->phoneNumberLineEdit->clear();
-    ui->emailLineEdit->clear();
-    ui->dateEdit->setDate(QDate::currentDate());
-
-    //the user will be added to the database based off the information entered
-    //store the values entered in the form:
-    QString firstName = ui->fristNameLineEdit->text();
-    QString Lastname = ui->lastNameLineEdit->text();
-    QString userName = ui->usernameLineEdit->text();
-    QString pswd = ui->passwordLineEdit->text();
-    QString phnNum = ui->phoneNumberLineEdit->text();
-    QString mail = ui->emailLineEdit->text();
-    QDate dobDate = ui->dateEdit->date();
-    bool admin = false;
-
-    // Check if any of the fields are empty
-    if (firstName.isEmpty() || Lastname.isEmpty() || userName.isEmpty() || pswd.isEmpty() || phnNum.isEmpty() || mail.isEmpty()) {
-        // Show error message using QMessageBox
-        QMessageBox::critical(this, ("Error"), ("All fields must be filled."));
-        return; // Exit the function early
-    }
-
-    // Convert QDate object back to a formatted QString the database will be able to take
-    QString formattedDateOfBirth = dobDate.toString("yyyy-MM-dd");
-
-    //call the add user function
-    Adminuser.Add_User(firstName, Lastname, userName, pswd, phnNum, mail, formattedDateOfBirth, admin);
-
-
-
+    ui->stackedWidget->setCurrentIndex(10);
 }
 

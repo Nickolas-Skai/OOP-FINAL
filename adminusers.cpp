@@ -1,5 +1,4 @@
 #include "adminusers.h"
-#include "database.h"
 Adminusers::Adminusers() {
 
 }

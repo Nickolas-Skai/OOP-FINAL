@@ -1,7 +1,6 @@
 #ifndef BOOKING_H
 #define BOOKING_H
-#include "database.h"
-
+#include <adminusers.h>
 
 class Booking
 {

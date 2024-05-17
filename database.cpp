@@ -39,9 +39,9 @@ database::database()
 
 //database destructor
 database::~database() {
-    db.close();
+    /*db.close();
     QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection); //so this removes the database
-    return;
+    return;*/
 }
 
 
@@ -185,7 +185,7 @@ bool database::editRoom(int roomnumber, QString roomtype, int capacity, double p
 //delete a room from the database
 bool database::deleteRoom(int RoomId) {
     QSqlQuery query;
-    query.prepare("DELETE FROM Room WHERE RoomID = ?:d");
+    query.prepare("DELETE FROM Room WHERE RoomID = :id");
     query.bindValue(":id", RoomId);
 
     if (!query.exec()) {

@@ -1,8 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <database.h>
-#include "users.h"
-#include "adminusers.h"
 #include <QDateEdit>
 #include <QMainWindow>
 #include <QCalendarWidget>
@@ -14,6 +11,8 @@
 #include <QStandardItem>
 #include <QTableView>
 #include <QMessageBox>
+
+#include <adminusers.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
