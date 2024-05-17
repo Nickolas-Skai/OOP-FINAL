@@ -155,7 +155,15 @@ if(admin == true) {
         model->setItem(i, 4, new QStandardItem(rooms->record(i).value("Room Status").toString()));
         model->setItem(i, 5, new QStandardItem(rooms->record(i).value("Room Capacity").toString()));
     }
+} else {
+    // Handle unknown user type
+    qDebug() << "Unknown user type";
 }
+
+//setmodle to view
+ui->roomView->setModel(model);
+
+
 
 
 };
