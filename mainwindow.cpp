@@ -141,31 +141,9 @@ if(admin == true) {
 
     ui->backtodashboard->hide();
 
-    //load the roomview  with the user's information
-    //this is to display the room information to the user
-    //query the database for the rooms
-    QSqlQueryModel *rooms = db.getRooms();
 
-    //populate the table view with the rooms
-    for(int i = 0; i < rooms->rowCount(); i++){
-        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("ID").toString()));
-        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("Room Number").toString()));
-        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Room Type").toString()));
-        model->setItem(i, 3, new QStandardItem(rooms->record(i).value("Room Price").toString()));
-        model->setItem(i, 4, new QStandardItem(rooms->record(i).value("Room Status").toString()));
-        model->setItem(i, 5, new QStandardItem(rooms->record(i).value("Room Capacity").toString()));
-    }
-} else {
-    // Handle unknown user type
-    qDebug() << "Unknown user type";
+
 }
-
-//setmodle to view
-ui->roomView->setModel(model);
-
-
-
-
 };
 
 
@@ -654,7 +632,17 @@ void MainWindow::on_actionView_bookings_triggered()
 {
     //will go to view bookings page
     ui->stackedWidget->setCurrentIndex(11);
-    //load the bookings
+
+    //check if an admin is logged in
+    if (admin) {
+        // Admin is logged in
+        // Load the table view with all bookings
+        ui->Bookings_view->setModel(db.getBookings());
+    } else {
+        // User is logged in
+        // Load the table view with bookings for the logged in user
+        ui->Bookings_view->setModel(db.getBookings(userID));
+    }
 
 
 }
@@ -705,12 +693,15 @@ void MainWindow::on_Roommanagment_clicked()
 
 void MainWindow::on_personmanagment_clicked()
 {
-
+ui->stackedWidget->setCurrentIndex(10);
+    //when clicked it will fill up the table view with the users data
+    ui->personview->setModel(db.getUsers());
 }
 
 
 void MainWindow::on_ViewListings_clicked()
 {
-
+//wil take you back to the room view page
+    ui->stackedWidget->setCurrentIndex(3);
 }
 
