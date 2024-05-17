@@ -142,18 +142,9 @@ if(admin == true) {
 
     ui->backtodashboard->hide();
     //querye the database for the rooms
-    QSqlQueryModel *rooms = db.getRooms();
-    //populate the table view with the rooms
-    for(int i = 0; i < rooms->rowCount(); i++){
-        model->setItem(i, 0, new QStandardItem(rooms->record(i).value("ID").toString()));
-        model->setItem(i, 1, new QStandardItem(rooms->record(i).value("Room Number").toString()));
-        model->setItem(i, 2, new QStandardItem(rooms->record(i).value("Room Type").toString()));
-        model->setItem(i, 3, new QStandardItem(rooms->record(i).value("Room Price").toString()));
-    }
 
-    //set model to the table view
-    ui->roomView->setModel(model);
-    //set the table view to the model
+
+
 
 
 
