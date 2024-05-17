@@ -63,43 +63,14 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::populateRoomList() {
-    // Assuming ui->roomListWidget is your QListWidget
-    ui->listWidget->clear();
-    //query the database for the rooms
-    QSqlQueryModel *rooms = db.getRoomdetails();
-    //populate the list widget with the rooms for every room
-    QListWidgetItem *item;
-    for(int i = 0; i < rooms->rowCount(); i++){
-        item = new QListWidgetItem();
-       QString roomnumber = rooms->query().value("roomnumber").toString();
-       QString roomtype = rooms->query().value("roomtype").toString();
-       QString roomdescription = rooms->query().value("roomdescription").toString();
-        ui->listWidget->addItem(item);
-    }
 
-
-}
 //change the page to the login page and load rooms to be displayed
 void MainWindow::on_loginbutton_clicked()
 {
     //will go to the login page in the stack
     ui->stackedWidget->setCurrentIndex(2);
 
-    //for every record in the database add the room to the list adding it to an apporiate widget to display
 
-    //query the database for the rooms
-    QSqlQueryModel *rooms = db.getRoomdetails();
-
-    //populate the list widget with the rooms for every room
-    QListWidgetItem *item;
-    for(int i = 0; i < rooms->rowCount(); i++){
-        item = new QListWidgetItem();
-       QString roomnumber = rooms->query().value("roomnumber").toString();
-       QString roomtype = rooms->query().value("roomtype").toString();
-       QString roomdescription = rooms->query().value("roomdescription").toString();
-        ui->listWidget->addItem(item);
-    }
 
 
 
@@ -188,7 +159,7 @@ for(int i = 0; i < rooms->rowCount(); i++){
     model->setItem(i, 2, new QStandardItem(rooms->record(i).value("roomdescription").toString()));
 
 
-}}
+}};
 
 
 
