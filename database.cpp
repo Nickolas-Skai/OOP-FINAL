@@ -148,7 +148,7 @@ bool database::deleteUser(int userid) {
 //this function will add the room into the database
 bool database::addRoom(int roomnumber, QString Roomtype, int capacity, double pricepernight, bool availability) {
     QSqlQuery query;
-    query.prepare("INSERT INTO Room (Room_Number, Room_Type, Capacity, Price_Per_Night, Is_Available) "
+    query.prepare("INSERT INTO Room (RoomNumber, RoomType, Capacity, Price_Per_Night, Is_Available) "
                    "VALUES (:roomnumber, :Roomtype, :capacity, :pricepernight, :avilable)");
     query.bindValue(":roomnumber", roomnumber);
     query.bindValue("Roomtype",Roomtype);

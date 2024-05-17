@@ -106,6 +106,7 @@ private slots:
     void on_Roommanagment_clicked();
     void on_personmanagment_clicked();
     void on_ViewListings_clicked();
+    void on_Createlisting_clicked();
 };
 
 #endif // MAINWINDOW_H

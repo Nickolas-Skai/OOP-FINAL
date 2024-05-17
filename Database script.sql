@@ -29,11 +29,43 @@ CREATE TABLE IF NOT EXISTS `Amenity` (
     Price decimal(10,2) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS `Booking` (
+    BookingID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    RoomID INT NOT NULL,
+    CheckInDate DATE NOT NULL,
+    CheckOutDate DATE NOT NULL, 
+    TotalPrice DECIMAL(10,2) NOT NULL,
+    IsPaid BOOL NOT NULL, 
+    BookingDate DATE NOT NULL,
+    FOREIGN KEY(UserID) REFERENCES User(UserID),
+    FOREIGN KEY(RoomID) REFERENCES RoomO(RoomID)
+);
+
+-- BookedAmenities table
+CREATE TABLE IF NOT EXISTS `BookedAmenities` (
+    BookedAmenityID INT AUTO_INCREMENT PRIMARY KEY,
+    BookingID INT NOT NULL,
+    AmenityID INT NOT NULL,
+    FOREIGN KEY(BookingID) REFERENCES Booking(BookingID),
+    FOREIGN KEY(AmenityID) REFERENCES Amenities(AmenityID)
+);
+CREATE TABLE IF NOT EXISTS `Payment` (
+PaymentID int auto_increment Primary Key,
+BookingID int NOT NULL, 
+Amount decimal(10,2) NOT NULL,
+PaymentDate date NOT NULL,
+PaymentMethod text NOT NULL
+);
+
 select * from User;
 /*Inseting a user with admin*/
 INSERT INTO User(UserID, FirstName, LastName, UserName, Password, DateOfBirth, PhoneNum, Email, IsAdmin)
 VALUES(3, 'Seo', 'Requena', 'Seor', '12345', '2005-05-09', '242-3542', 'seo@gmail.com', 1);
 
+/*insert into amenities*/
+INSERT INTO Amenity(AmenityID, Amenity_Name, Description, Price)
+VALUES(1, 'Netflix', 'Access to Netflix while you stay', 50.00);
 
 /*dummy data for the room table*/
 INSERT INTO Room(RoomID, RoomNumber, RoomType, Capacity, Price_Per_Night, Is_Available)
@@ -49,6 +81,4 @@ VALUES(1, 1, 'Single Bed', 1, 100.00, 1),
     (10, 10, 'Suit Room', 4, 550.00, 1);
 
 select * from Room;
-    
-
 

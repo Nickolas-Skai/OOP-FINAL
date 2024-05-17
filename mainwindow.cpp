@@ -25,35 +25,6 @@ MainWindow::MainWindow(QWidget *pant)
     ui->setupUi(this);
     //when you run the code it stack widget will be at 0 (welcome page)
     ui->stackedWidget->setCurrentIndex(0);
-//populateRoomList();
-    //help me do this part please. I am not su how to do this
-/*
-    //cate a instance of the standard table model to display data from the database
-    model = new QStandardItemModel(this);
-    //set the table view to the model
-    ui->personview->setModel(model);
-    //create the table view
-    model->setColumnCount(8);
-    model->setHorizontalHeaderLabels(QStringList() << "ID" << "First Name" << "Last Name" << "Username" << "Password" << "Date of Birth" << "Phone Number" << "Email");
-
-    //query the database for the users
-    QSqlQueryModel *users = db.getUsers();
-    //populate the table view with the users
-    for(int i = 0; i < users->rowCount(); i++){
-        model->setItem(i, 0, new QStandardItem(users->record(i).value("ID").toString()));
-        model->setItem(i, 1, new QStandardItem(users->record(i).value("First Name").toString()));
-        model->setItem(i, 2, new QStandardItem(users->record(i).value("Last Name").toString()));
-        model->setItem(i, 3, new QStandardItem(users->record(i).value("Username").toString()));
-        model->setItem(i, 4, new QStandardItem(users->record(i).value("Password").toString()));
-        model->setItem(i, 5, new QStandardItem(users->record(i).value("Date of Birth").toString()));
-        model->setItem(i, 6, new QStandardItem(users->record(i).value("Phone Number").toString()));
-        model->setItem(i, 7, new QStandardItem(users->record(i).value("Email").toString()));
-    }
-
-    */
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -70,10 +41,6 @@ void MainWindow::on_loginbutton_clicked()
 {
     //will go to the login page in the stack
     ui->stackedWidget->setCurrentIndex(2);
-
-
-
-
 
 }
 
@@ -143,8 +110,7 @@ if(admin == true) {
     ui->backtodashboard->hide();
     //querye the database for the rooms
 
-
-
+    ui->roomView->setModel(db.getRooms());
 
 
 
@@ -584,7 +550,7 @@ void MainWindow::on_Edituserconfim_clicked()
 void MainWindow::on_continuetodetails_clicked()
 {
     // Check if a room is selected
-    QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
+    /*QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
     if (selectedRows.isEmpty()) {
         // No room selected
         QMessageBox::warning(this, "Edit Room", "Please select a room to edit.");
@@ -628,6 +594,63 @@ void MainWindow::on_continuetodetails_clicked()
     }
 
     // Fill the form with the room amenities
+    QStringList amenities;
+    while (query2.next()) {
+        amenities << query2.value("AmenityName").toString();
+    }
+    ui->amenitiesloeadhere->setText(amenities.join(", "));*/
+
+
+
+    // Check if a row is selected in the table view
+    QModelIndexList selectedRows = ui->Room_view->selectionModel()->selectedRows();
+    if (selectedRows.isEmpty()) {
+        // No row selected
+        QMessageBox::warning(this, "Room Details", "Please select a room to view details.");
+        return;
+    }
+
+    // Get the selected room ID
+    QModelIndex selectedIndex = selectedRows.at(0);
+    int roomIDColumn = 0; // Assuming the room ID is in the first column
+    QVariant roomIDData = selectedIndex.sibling(selectedIndex.row(), roomIDColumn).data();
+    if (!roomIDData.isValid() || !roomIDData.canConvert<int>()) {
+        QMessageBox::warning(this, "Error", "Selected room ID is invalid.");
+        return;
+    }
+    int roomID = roomIDData.toInt();
+
+    // Query the room details
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Rooms WHERE RoomID = :roomID");
+    query.bindValue(":roomID", roomID);
+    if (!query.exec()) {
+        QMessageBox::warning(this, "Error", "Failed to execute room query: " + query.lastError().text());
+        return;
+    }
+
+    if (query.next()) {
+        // Display the room details in the labels
+        ui->roomnumberhere->setText(query.value("RoomNumber").toString());
+        ui->roomtype_2->setText(query.value("RoomType").toString());
+        ui->ppernight->setText(query.value("Price").toString());
+        ui->descinfo->setText(query.value("Description").toString());
+        ui->roomstatus->setText(query.value("Status").toString());
+    } else {
+        QMessageBox::warning(this, "Error", "No room found with ID: " + QString::number(roomID));
+        return;
+    }
+
+    // Query the amenities of the room
+    QSqlQuery query2;
+    query2.prepare("SELECT AmenityName FROM RoomAmenities WHERE RoomID = :roomID");
+    query2.bindValue(":roomID", roomID);
+    if (!query2.exec()) {
+        QMessageBox::warning(this, "Error", "Failed to execute amenities query: " + query2.lastError().text());
+        return;
+    }
+
+    // Display the room amenities in the label
     QStringList amenities;
     while (query2.next()) {
         amenities << query2.value("AmenityName").toString();
@@ -706,5 +729,32 @@ void MainWindow::on_ViewListings_clicked()
 {
 //wil take you back to the room view page
     ui->stackedWidget->setCurrentIndex(3);
+
+ui->roomView->setModel(db.getRooms());
+}
+
+
+void MainWindow::on_Createlisting_clicked()
+{
+    //get the data stored
+    int roomnumber = ui->roomNumberLineEdit->text().toInt();
+    QString roomtype = ui->roomTypeLineEdit->text();
+    int capacity = ui->capinputLineEdit->text().toInt();
+    double Price = ui->priceLineEdit->text().toDouble();
+    bool availabilty = ui->availability_check->isChecked();
+
+    QString newroom = Adminuser.Add_Room(roomnumber, roomtype, capacity, Price, availabilty);
+    // Check if the deletion was successful
+    if (newroom == "Room Created Successfully!") {
+        // Room deleted successfully
+        QMessageBox::information(this, "Create Room", "Room Created successfully.");
+
+        // Refresh the table view
+        //ui->Room_view->setModel(db.getRooms());
+        //ui->stackedWidget->setCurrentIndex(8);
+    } else {
+        // Error deleting room
+        QMessageBox::critical(this, "Create Room", newroom);
+    }
 }
 
