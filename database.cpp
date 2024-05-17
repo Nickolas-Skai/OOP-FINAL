@@ -279,8 +279,6 @@ QSqlQueryModel *database::getUsers() {
 QSqlQueryModel *database::getUser(int userID) {
     QSqlQueryModel *model = new QSqlQueryModel();
     model->setQuery("SELECT * FROM User WHERE UserID = " + QString::number(userID));
-    //pointer to fistname
-   string*firstname= *model->setQuery("SELECT FirstName FROM User WHERE UserID = " + QString::number(userID));
     return model;
 }
 //get all rooms in the database number ,descritpion  and price
@@ -291,7 +289,7 @@ QSqlQueryModel *database::getRoomdetails() {
 
 }
     //queries for the database to a specific user in the database first name , last name, user name, phone number, email, date of birth, and if they are an admin
-    QSqlQueryModel *database::getuserfirstname( int userID) {
+QSqlQueryModel *database::getuserfisrtname(int userID) {
         QSqlQueryModel *model = new QSqlQueryModel();
         model->setQuery("SELECT FirstName FROM User WHERE UserID = " + QString::number(userID));
         return model;
