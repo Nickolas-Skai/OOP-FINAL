@@ -107,7 +107,7 @@ bool database::addUser(QString firstname, QString lastname, QString username, QS
 
 
 ///this function will update the user informatin after it was changed by the admin in the ui////
-bool database::editUser(/*int UserId,*/ QString firstname, QString lastname, QString username, QString password, QString phonenum, QString email, QString dob, bool isadmin) {
+bool database::editUser(QString firstname, QString lastname, QString username, QString password, QString phonenum, QString email, QString dob, bool isadmin) {
     QSqlQuery query;
     query.prepare("UPDATE User SET FirstName = :firstName, LastName = :lastName, UserName = :username, Password = :password, "
                   "DateOfBirth = :dateOfBirth, PhoneNum = :Phonenum, Email = :email, IsAdmin = :admin WHERE UserID = :userId");
@@ -120,7 +120,7 @@ bool database::editUser(/*int UserId,*/ QString firstname, QString lastname, QSt
     query.bindValue(":Phonenum", phonenum);
     query.bindValue(":email", email);
     query.bindValue(":admin", isadmin);
-    //query.bindValue(":userId", userId); ///WE DO NEED THE ID TO EDIT BUT IDK HOW WE GONE GET THAT.
+    //query.bindValue(":userId", UserId); ///WE DO NEED THE ID TO EDIT BUT IDK HOW WE GONE GET THAT.
 
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
@@ -300,6 +300,23 @@ QSqlQueryModel *database::getRoomdetails() {
 }*/
 
 /////////////////////////////////////ALL THE GETS /////////////////////////////////
+int database::getuserID(int UserID) {
+    QSqlQuery query;
+    query.prepare("SELECT UserID FROM User WHERE UserID = :userID");
+    query.bindValue(":userID", UserID);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return -1; // Return an invalid ID if the query fails
+    }
+
+    if (query.next()) {
+        return query.value("UserID").toInt();
+    } else {
+        qDebug() << "User not found for ID:" << UserID;
+        return -1; // Return an invalid ID if no user is found for the given ID
+    }
+}
 QString database::getuserfisrtname(int userID) {
     QSqlQuery query;
     query.prepare("SELECT FirstName FROM User WHERE UserID = :userID");

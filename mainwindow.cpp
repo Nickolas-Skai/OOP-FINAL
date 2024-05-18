@@ -504,6 +504,7 @@ void MainWindow::on_Deleteperson_clicked()
 
 void MainWindow::on_Edituserconfim_clicked()
 {
+    int userID = ui->useridLineEdit->text().toInt();
     QString firstName = ui->fristNameLineEdit_2->text();
     QString Lastname = ui->lastNameLineEdit_2->text();
     QString userName = ui->usernameLineEdit_2->text();
@@ -719,7 +720,7 @@ void MainWindow::on_Roommanagment_clicked()
 
 void MainWindow::on_personmanagment_clicked()
 {
-ui->stackedWidget->setCurrentIndex(10);
+ui->stackedWidget->setCurrentIndex(9);
     //when clicked it will fill up the table view with the users data
     ui->personview->setModel(db.getUsers());
 }
