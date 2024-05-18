@@ -382,6 +382,13 @@ void MainWindow::on_Checkbookings_clicked()
     //will go to view bookings page
 
     ui->stackedWidget->setCurrentIndex(11);
+    //check if admin
+    if (Adminuser.getAdmin()) {
+    } else {
+        //if not admin then show the table view with only the user bookings
+        //hide menu button
+        ui->backtodashboard->hide();
+    }
 }
 
 

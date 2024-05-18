@@ -105,6 +105,7 @@ private slots:
     void on_personmanagment_clicked();
     void on_ViewListings_clicked();
     void on_Createlisting_clicked();
+    void on_pushButton_3_clicked();
 };
 
 #endif // MAINWINDOW_H
